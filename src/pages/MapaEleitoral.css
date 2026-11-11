@@ -1,0 +1,340 @@
+
+.mapa-eleitoral {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mapa-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.mapa-subtitulo {
+  color: #991956;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.mapa-header h1 {
+  margin: 8px 0;
+  font-size: 28px;
+  color: #1a202c;
+}
+
+.mapa-header p {
+  margin: 0;
+  color: #718096;
+}
+
+.mapa-periodo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  padding: 14px 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.mapa-periodo strong {
+  font-size: 22px;
+  color: #c92071;
+}
+
+.mapa-periodo span {
+  font-size: 12px;
+  color: #718096;
+}
+
+.mapa-indicadores {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.mapa-card {
+  background: white;
+  padding: 22px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.mapa-card span {
+  font-size: 13px;
+  color: #718096;
+}
+
+.mapa-card strong {
+  font-size: 25px;
+  color: #1a202c;
+}
+
+.mapa-container {
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.mapa-leaflet {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.mapa-legenda {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #718096;
+  font-size: 13px;
+}
+
+.legenda-circulo {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #c92071;
+  border: 1px solid #991956;
+}
+
+.mapa-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 150px;
+}
+
+.mapa-popup strong {
+  color: #991956;
+  font-size: 14px;
+}
+
+.mapa-popup span {
+  font-size: 13px;
+}
+
+.mapa-popup small {
+  color: #718096;
+}
+
+.mapa-mensagem,
+.mapa-erro {
+  padding: 24px;
+  border-radius: 10px;
+  background: white;
+  color: #718096;
+}
+
+.mapa-erro {
+  color: #c53030;
+}
+
+.mapa-rodape {
+  margin: 0;
+  color: #718096;
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .mapa-header {
+    align-items: flex-start;
+  }
+
+  .mapa-header h1 {
+    font-size: 23px;
+  }
+
+  .mapa-indicadores {
+    grid-template-columns: 1fr;
+  }
+
+  .mapa-container {
+    height: 450px;
+  }
+}
+
+.mapa-controles {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mapa-controles > span {
+  color: #718096;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.mapa-controles button {
+  padding: 9px 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  color: #4a5568;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.mapa-controles button:hover {
+  border-color: #c92071;
+  color: #c92071;
+}
+
+.mapa-controles button.ativo {
+  background: #c92071;
+  border-color: #c92071;
+  color: white;
+}
+
+.mapa-legenda {
+  flex-wrap: wrap;
+}
+
+.legenda-cor {
+  display: inline-block;
+  width: 25px;
+  height: 13px;
+  border-radius: 3px;
+}
+
+
+/* Filtros do mapa eleitoral */
+.mapa-filtros {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.8fr) minmax(220px, 1.5fr) minmax(250px, 1.7fr);
+  gap: 16px;
+  padding: 20px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.mapa-filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.mapa-filtro label {
+  color: #4a5568;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.mapa-filtro input,
+.mapa-filtro select {
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+  color: #1a202c;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.mapa-filtro input:focus,
+.mapa-filtro select:focus {
+  border-color: #c92071;
+  box-shadow: 0 0 0 3px rgba(201, 32, 113, 0.1);
+}
+
+.mapa-filtro select:disabled {
+  background: #f7fafc;
+  color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.mapa-candidato-selecionado {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 20px;
+  border-left: 4px solid #c92071;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.mapa-candidato-selecionado strong {
+  color: #1a202c;
+  font-size: 15px;
+}
+
+.mapa-candidato-selecionado span {
+  color: #718096;
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .mapa-filtros {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mapa-filtro:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .mapa-filtros {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .mapa-filtro:last-child {
+    grid-column: auto;
+  }
+}
+
+.mapa-paginacao {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.mapa-paginacao span {
+  color: #4a5568;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.mapa-paginacao button {
+  padding: 9px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  color: #4a5568;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.mapa-paginacao button:hover:not(:disabled) {
+  border-color: #c92071;
+  color: #c92071;
+}
+
+.mapa-paginacao button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
