@@ -1,0 +1,277 @@
+﻿
+.dashboard {
+  width: 100%;
+}
+
+.dashboard-header {
+  margin-bottom: 32px;
+}
+
+.dashboard-header h1 {
+  font-size: 28px;
+  color: #1a202c;
+  margin: 0;
+}
+
+.dashboard-header p {
+  color: #718096;
+  margin-top: 8px;
+}
+
+.dashboard-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.dashboard-info h2 {
+  color: #1a202c;
+  font-size: 22px;
+  margin: 0 0 6px;
+}
+
+.dashboard-info p {
+  color: #718096;
+  margin: 0;
+}
+
+.dashboard-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 220px;
+}
+
+.dashboard-filter label {
+  color: #4a5568;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dashboard-filter select {
+  padding: 11px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  color: #1a202c;
+  outline: none;
+}
+
+.dashboard-filter select:focus {
+  border-color: #c92071;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #edf0f5;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 3%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.stat-card span {
+  color: #718096;
+  font-size: 14px;
+}
+
+.stat-card strong {
+  color: #1a202c;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+  .dashboard-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-info {
+    align-items: stretch;
+  }
+
+  .dashboard-filter {
+    width: 100%;
+  }
+}
+
+.ranking-section {
+  margin-top: 32px;
+  background: #ffffff;
+  border: 1px solid #edf0f5;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 3%);
+}
+
+.ranking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ranking-header h2 {
+  color: #1a202c;
+  font-size: 20px;
+  margin: 0;
+}
+
+.ranking-header span {
+  color: #c92071;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ranking-item {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 90px;
+  align-items: center;
+  gap: 16px;
+}
+
+.ranking-position {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #fce7f3;
+  color: #991956;
+  font-weight: 700;
+}
+
+.ranking-details {
+  min-width: 0;
+}
+
+.ranking-candidate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.ranking-candidate strong {
+  color: #1a202c;
+  font-size: 14px;
+}
+
+.ranking-candidate span {
+  color: #718096;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ranking-progress {
+  width: 100%;
+  height: 8px;
+  overflow: hidden;
+  background: #edf0f5;
+  border-radius: 20px;
+}
+
+.ranking-progress-bar {
+  height: 100%;
+  background: #c92071;
+  border-radius: 20px;
+  transition: width 0.3s ease;
+}
+
+.ranking-votes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.ranking-votes strong {
+  color: #1a202c;
+  font-size: 14px;
+}
+
+.ranking-votes span {
+  color: #718096;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .ranking-section {
+    padding: 16px;
+  }
+
+  .ranking-item {
+    grid-template-columns: 32px minmax(0, 1fr) 70px;
+    gap: 8px;
+  }
+
+  .ranking-position {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .ranking-candidate strong {
+    font-size: 12px;
+  }
+}
+
+
+.dashboard-charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.chart-card {
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #edf0f5;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 3%);
+}
+
+.chart-card h2 {
+  color: #1a202c;
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+
+.chart-card p {
+  color: #718096;
+  font-size: 13px;
+  margin: 0 0 20px;
+}
+
+@media (max-width: 1000px) {
+  .dashboard-charts {
+    grid-template-columns: 1fr;
+  }
+}
