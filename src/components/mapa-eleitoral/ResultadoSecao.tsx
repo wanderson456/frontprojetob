@@ -1,4 +1,6 @@
 
+import { useState } from "react";
+
 import type { SectionVoteItem } from "../../types/eleicoes";
 
 interface ResultadoSecaoProps {
@@ -12,6 +14,9 @@ export default function ResultadoSecao({
   carregando,
   erro,
 }: ResultadoSecaoProps) {
+  const [cargoSelecionado, setCargoSelecionado] = useState<number | null>(null);
+  const [mostrarTodos, setMostrarTodos] = useState(false);
+
   const gruposPorCargo = Array.from(
     votosSecao.reduce((grupos, voto) => {
       const grupo = grupos.get(voto.officeCode) ?? {
@@ -30,6 +35,38 @@ export default function ResultadoSecao({
       items: SectionVoteItem[];
     }>()),
   ).sort((a, b) => a[0] - b[0]);
+
+  const grupoAtual =
+    gruposPorCargo.find(([codigo]) => codigo === cargoSelecionado) ??
+    gruposPorCargo[0];
+
+  const codigoAtual = grupoAtual?.[0];
+  const dadosCargo = grupoAtual?.[1];
+
+  const nominais = (dadosCargo?.items ?? [])
+    .filter((item) => item.voteType === "NOMINAL")
+    .sort((a, b) => b.quantity - a.quantity);
+
+  const legendas = (dadosCargo?.items ?? []).filter(
+    (item) => item.voteType === "LEGENDA",
+  );
+
+  const brancos = (dadosCargo?.items ?? [])
+    .filter((item) => item.voteType === "BRANCO")
+    .reduce((total, item) => total + item.quantity, 0);
+
+  const nulos = (dadosCargo?.items ?? [])
+    .filter((item) => item.voteType === "NULO")
+    .reduce((total, item) => total + item.quantity, 0);
+
+  const maiorVotacao = Math.max(
+    ...nominais.map((item) => item.quantity),
+    1,
+  );
+
+  const candidatosExibidos = mostrarTodos
+    ? nominais
+    : nominais.slice(0, 3);
 
   return (
     <div className="mapa-painel-resultados">
@@ -51,41 +88,34 @@ export default function ResultadoSecao({
         <p>Selecione uma seção para consultar os votos.</p>
       )}
 
-      {!carregando &&
-        !erro &&
-        gruposPorCargo.map(([codigo, grupo]) => {
-          const nominais = grupo.items
-            .filter((item) => item.voteType === "NOMINAL")
-            .sort((a, b) => b.quantity - a.quantity);
+      {!carregando && !erro && gruposPorCargo.length > 0 && (
+        <>
+          <div className="mapa-cargos-tabs" role="tablist">
+            {gruposPorCargo.map(([codigo, grupo]) => (
+              <button
+                key={codigo}
+                type="button"
+                role="tab"
+                aria-selected={codigoAtual === codigo}
+                className={codigoAtual === codigo ? "ativo" : ""}
+                onClick={() => {
+                  setCargoSelecionado(codigo);
+                  setMostrarTodos(false);
+                }}
+              >
+                {grupo.officeName}
+              </button>
+            ))}
+          </div>
 
-          const legendas = grupo.items.filter(
-            (item) => item.voteType === "LEGENDA",
-          );
-
-          const brancos = grupo.items
-            .filter((item) => item.voteType === "BRANCO")
-            .reduce((total, item) => total + item.quantity, 0);
-
-          const nulos = grupo.items
-            .filter((item) => item.voteType === "NULO")
-            .reduce((total, item) => total + item.quantity, 0);
-
-          const maiorVotacao = Math.max(
-            ...nominais.map((item) => item.quantity),
-            1,
-          );
-
-          return (
-            <section
-              key={codigo}
-              className="mapa-cargo-resultado"
-            >
+          {dadosCargo && (
+            <section className="mapa-cargo-resultado">
               <header>
-                <h4>{grupo.officeName}</h4>
-                <span>Código {codigo}</span>
+                <h4>{dadosCargo.officeName}</h4>
+                <span>Código {dadosCargo.officeCode}</span>
               </header>
 
-              {nominais.map((item, index) => (
+              {candidatosExibidos.map((item, index) => (
                 <div
                   className="mapa-candidato-votos"
                   key={item.candidateId}
@@ -116,6 +146,18 @@ export default function ResultadoSecao({
                 </div>
               ))}
 
+              {nominais.length > 3 && (
+                <button
+                  type="button"
+                  className="mapa-ver-todos"
+                  onClick={() => setMostrarTodos((atual) => !atual)}
+                >
+                  {mostrarTodos
+                    ? "Mostrar menos"
+                    : `Ver todos os ${nominais.length} candidatos`}
+                </button>
+              )}
+
               {legendas.length > 0 && (
                 <div className="mapa-votos-adicionais">
                   <strong>Votos de legenda</strong>
@@ -143,8 +185,9 @@ export default function ResultadoSecao({
                 </div>
               </div>
             </section>
-          );
-        })}
+          )}
+        </>
+      )}
     </div>
   );
 }

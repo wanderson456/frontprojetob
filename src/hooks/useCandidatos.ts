@@ -8,7 +8,6 @@ interface UseCandidatosProps {
   cargo: number;
   busca: string;
   pagina: number;
-  onAntesDeCarregar: () => void;
 }
 
 const ANO = 2022;
@@ -19,7 +18,6 @@ export function useCandidatos({
   cargo,
   busca,
   pagina,
-  onAntesDeCarregar,
 }: UseCandidatosProps) {
   const [candidatos, setCandidatos] = useState<CandidateListItem[]>([]);
   const [candidato, setCandidato] = useState<CandidateListItem | null>(null);
@@ -32,8 +30,6 @@ export function useCandidatos({
 
     async function carregarCandidatos() {
       try {
-        onAntesDeCarregar();
-
         setCarregandoCandidatos(true);
         setErroCandidatos("");
         setCandidato(null);
@@ -74,7 +70,7 @@ export function useCandidatos({
     return () => {
       cancelado = true;
     };
-  }, [cargo, busca, pagina, onAntesDeCarregar]);
+  }, [cargo, busca, pagina]);
 
   return {
     candidatos,
