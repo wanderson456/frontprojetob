@@ -88,11 +88,15 @@ export interface CandidateGeoResponse {
 
 export interface SectionItem {
   municipalityCode: string;
+  municipalityTseCode: string | null;
   zone: number;
   section: number;
   latitude: number | null;
   longitude: number | null;
   votes: number;
+  pollingPlaceNumber: number | null;
+  pollingPlaceName: string | null;
+  pollingPlaceAddress: string | null;
 }
 
 export interface SectionResponse {
@@ -112,3 +116,32 @@ export interface SectionSearchParams {
   limite?: number;
 }
 
+
+export type VoteType = "NOMINAL" | "LEGENDA" | "BRANCO" | "NULO";
+
+export interface SectionVoteItem {
+  year: number;
+  round: number;
+  municipalityCode: string;
+  municipalityName: string;
+  zone: number;
+  section: number;
+  officeCode: number;
+  officeName: string;
+  voteCode: string;
+  voteName: string;
+  quantity: number;
+  candidateId: number;
+  voteType: VoteType;
+  pollingPlaceCode: number;
+  pollingPlaceName: string;
+  pollingPlaceAddress: string;
+}
+
+export interface SectionVotesResponse {
+  items: SectionVoteItem[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}

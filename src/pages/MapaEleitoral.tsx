@@ -1,5 +1,6 @@
-﻿
-import { useEffect, useState } from "react";
+﻿import { useCallback, useEffect, useState } from "react";
+
+
 import {
   MapContainer,
   TileLayer,
@@ -14,15 +15,21 @@ import "leaflet/dist/leaflet.css";
 import "./MapaEleitoral.css";
 
 import {
-  getCandidatos,
   getCandidatoMapaGeografico,
 } from "../services/candidatosService";
+import { getSectionVotes } from "../services/api";
 import { getMunicipioSecoes } from "../services/secoesService";
+import TabelaSecoes from "../components/mapa-eleitoral/TabelaSecoes";
+import FiltrosMapa from "../components/mapa-eleitoral/FiltrosMapa";
+import IndicadoresMapa from "../components/mapa-eleitoral/IndicadoresMapa";
+import MapaHeader from "../components/mapa-eleitoral/MapaHeader";
+import PainelSecoes from "../components/mapa-eleitoral/PainelSecoes";
+import { useCandidatos } from "../hooks/useCandidatos";
 
 import type {
   CandidateGeoMunicipality,
-  CandidateListItem,
   SectionItem,
+  SectionVoteItem,
 } from "../types/eleicoes";
 
 
@@ -38,7 +45,7 @@ type ModoVisualizacao = "circulos" | "municipios";
 
 const ANO = 2022;
 const TURNO = 1;
-const LIMITE_CANDIDATOS = 100;
+
 const LIMITE_MUNICIPIOS = 100;
 
 const CARGOS = [
@@ -56,10 +63,6 @@ export default function MapaEleitoral() {
   const [busca, setBusca] = useState("");
   const [buscaDebounced, setBuscaDebounced] = useState("");
 
-  const [candidatos, setCandidatos] = useState<CandidateListItem[]>([]);
-  const [candidato, setCandidato] = useState<CandidateListItem | null>(null);
-  const [paginaCandidatos, setPaginaCandidatos] = useState(1);
-  const [totalPaginasCandidatos, setTotalPaginasCandidatos] = useState(1);
 
   const [municipios, setMunicipios] = useState<CandidateGeoMunicipality[]>([]);
   const [malha, setMalha] = useState<MalhaMunicipal | null>(null);
@@ -68,6 +71,14 @@ export default function MapaEleitoral() {
   const [municipioSelecionado, setMunicipioSelecionado] =
     useState<CandidateGeoMunicipality | null>(null);
   const [secoes, setSecoes] = useState<SectionItem[]>([]);
+  const [secoesMapa, setSecoesMapa] = useState<SectionItem[]>([]);
+  const [secaoSelecionada, setSecaoSelecionada] = useState<SectionItem | null>(null);
+
+  const [painelSecoesAberto, setPainelSecoesAberto] = useState(false);
+  const [votosSecao, setVotosSecao] = useState<SectionVoteItem[]>([]);
+  const [carregandoVotosSecao, setCarregandoVotosSecao] = useState(false);
+  const [erroVotosSecao, setErroVotosSecao] = useState("");
+
   const [totalSecoes, setTotalSecoes] = useState(0);
   const [paginaSecoes, setPaginaSecoes] = useState(1);
   const [totalPaginasSecoes, setTotalPaginasSecoes] = useState(1);
@@ -75,11 +86,29 @@ export default function MapaEleitoral() {
   const [erroSecoes, setErroSecoes] = useState("");
 
   const [totalMunicipios, setTotalMunicipios] = useState(0);
-  const [carregandoCandidatos, setCarregandoCandidatos] = useState(false);
+
   const [carregandoMapa, setCarregandoMapa] = useState(false);
   const [erro, setErro] = useState("");
-  const [erroCandidatos, setErroCandidatos] = useState("");
+  const [paginaCandidatos, setPaginaCandidatos] = useState(1);
 
+  const limparMapaAntesDeCarregar = useCallback(() => {
+    setMunicipios([]);
+    setTotalMunicipios(0);
+  }, []);
+
+  const {
+    candidatos,
+    candidato,
+    setCandidato,
+    totalPaginasCandidatos,
+    carregandoCandidatos,
+    erroCandidatos,
+  } = useCandidatos({
+    cargo,
+    busca: buscaDebounced,
+    pagina: paginaCandidatos,
+    onAntesDeCarregar: limparMapaAntesDeCarregar,
+  });
   useEffect(() => {
     const temporizador = window.setTimeout(() => {
       setBuscaDebounced(busca);
@@ -125,54 +154,7 @@ export default function MapaEleitoral() {
     };
   }, []);
 
-  useEffect(() => {
-    let cancelado = false;
 
-    async function carregarCandidatos() {
-      try {
-        setCarregandoCandidatos(true);
-        setErroCandidatos("");
-        setCandidato(null);
-        setMunicipios([]);
-        setTotalMunicipios(0);
-
-        const resposta = await getCandidatos({
-          ano: ANO,
-          turno: TURNO,
-          cargo,
-          busca: buscaDebounced.trim() || undefined,
-          pagina: paginaCandidatos,
-          limite: LIMITE_CANDIDATOS,
-        });
-
-        if (!cancelado) {
-          setCandidatos(resposta.items);
-          setCandidato(resposta.items[0] ?? null);
-          setTotalPaginasCandidatos(resposta.totalPages);
-        }
-      } catch (error) {
-        if (!cancelado) {
-          setCandidatos([]);
-          setCandidato(null);
-          setErroCandidatos(
-            error instanceof Error
-              ? error.message
-              : "Não foi possível carregar os candidatos.",
-          );
-        }
-      } finally {
-        if (!cancelado) {
-          setCarregandoCandidatos(false);
-        }
-      }
-    }
-
-    carregarCandidatos();
-
-    return () => {
-      cancelado = true;
-    };
-  }, [cargo, buscaDebounced, paginaCandidatos]);
 
   useEffect(() => {
     if (!candidato) {
@@ -342,20 +324,50 @@ export default function MapaEleitoral() {
       setErroSecoes("");
       setPaginaSecoes(pagina);
 
-      const resposta = await getMunicipioSecoes({
-        municipalityCode: municipio.ibgeCode,
-        sqCandidato: candidato.sqCandidato,
-        ano: ANO,
-        turno: TURNO,
-        pagina,
-        limite: 20,
-      });
+      const [respostaTabela, primeiraPaginaMapa] = await Promise.all([
+        getMunicipioSecoes({
+          municipalityCode: municipio.ibgeCode,
+          sqCandidato: candidato.sqCandidato,
+          ano: ANO,
+          turno: TURNO,
+          pagina,
+          limite: 20,
+        }),
+        getMunicipioSecoes({
+          municipalityCode: municipio.ibgeCode,
+          sqCandidato: candidato.sqCandidato,
+          ano: ANO,
+          turno: TURNO,
+          pagina: 1,
+          limite: 100,
+        }),
+      ]);
 
-      setSecoes(resposta.items);
-      setTotalSecoes(resposta.total);
-      setTotalPaginasSecoes(resposta.totalPages);
+      const demaisPaginasMapa = await Promise.all(
+        Array.from(
+          { length: Math.max(0, primeiraPaginaMapa.totalPages - 1) },
+          (_, index) =>
+            getMunicipioSecoes({
+              municipalityCode: municipio.ibgeCode,
+              sqCandidato: candidato.sqCandidato,
+              ano: ANO,
+              turno: TURNO,
+              pagina: index + 2,
+              limite: 100,
+            }),
+        ),
+      );
+
+      setSecoes(respostaTabela.items);
+      setTotalSecoes(respostaTabela.total);
+      setTotalPaginasSecoes(respostaTabela.totalPages);
+      setSecoesMapa([
+        ...primeiraPaginaMapa.items,
+        ...demaisPaginasMapa.flatMap((item) => item.items),
+      ]);
     } catch (error) {
       setSecoes([]);
+      setSecoesMapa([]);
       setTotalSecoes(0);
       setTotalPaginasSecoes(1);
       setErroSecoes(
@@ -368,109 +380,139 @@ export default function MapaEleitoral() {
     }
   }
 
+  async function selecionarSecao(secao: SectionItem) {
+    if (!secao.municipalityTseCode) {
+      setErroVotosSecao("Código TSE do município não informado.");
+      setPainelSecoesAberto(true);
+      return;
+    }
+
+    const municipalityTseCode = secao.municipalityTseCode;
+
+    setSecaoSelecionada(secao);
+    setPainelSecoesAberto(true);
+    setVotosSecao([]);
+    setErroVotosSecao("");
+    setCarregandoVotosSecao(true);
+
+    try {
+      const primeiraPagina = await getSectionVotes({
+        municipalityCode: municipalityTseCode,
+        zone: secao.zone,
+        section: secao.section,
+        ano: ANO,
+        turno: TURNO,
+        pagina: 1,
+        limite: 100,
+      });
+
+      const demaisPaginas = await Promise.all(
+        Array.from(
+          { length: Math.max(0, primeiraPagina.totalPages - 1) },
+          (_, index) =>
+            getSectionVotes({
+              municipalityCode: municipalityTseCode,
+              zone: secao.zone,
+              section: secao.section,
+              ano: ANO,
+              turno: TURNO,
+              pagina: index + 2,
+              limite: 100,
+            }),
+        ),
+      );
+
+      setVotosSecao([
+        ...primeiraPagina.items,
+        ...demaisPaginas.flatMap((pagina) => pagina.items),
+      ]);
+    } catch (error) {
+      setVotosSecao([]);
+      setErroVotosSecao(
+        error instanceof Error
+          ? error.message
+          : "Não foi possível carregar os votos desta seção.",
+      );
+    } finally {
+      setCarregandoVotosSecao(false);
+    }
+  }
+
+
+
+  const locaisVotacao = Array.from(
+    secoesMapa.reduce(
+      (locais, secao) => {
+        if (secao.latitude === null || secao.longitude === null) {
+          return locais;
+        }
+
+        const chave =
+          secao.pollingPlaceNumber !== null
+            ? `local-${secao.pollingPlaceNumber}`
+            : `coord-${secao.latitude}-${secao.longitude}`;
+
+        const local = locais.get(chave) ?? {
+          pollingPlaceNumber: secao.pollingPlaceNumber,
+          pollingPlaceName: secao.pollingPlaceName,
+          pollingPlaceAddress: secao.pollingPlaceAddress,
+          latitude: secao.latitude,
+          longitude: secao.longitude,
+          secoes: [] as SectionItem[],
+        };
+
+        local.secoes.push(secao);
+        locais.set(chave, local);
+
+        return locais;
+      },
+      new Map<
+        string,
+        {
+          pollingPlaceNumber: number | null;
+          pollingPlaceName: string | null;
+          pollingPlaceAddress: string | null;
+          latitude: number;
+          longitude: number;
+          secoes: SectionItem[];
+        }
+      >(),
+    ).values(),
+  );
+
+
   return (
     <div className="mapa-eleitoral">
-      <header className="mapa-header">
-        <div>
-          <span className="mapa-subtitulo">DISTRIBUIÇÃO GEOGRÁFICA</span>
-          <h1>Mapa Eleitoral do Ceará</h1>
-          <p>
-            {candidato
-              ? `Distribuição dos votos de ${candidato.candidateName} nas eleições de ${ANO}.`
-              : "Selecione um candidato para visualizar sua votação."}
-          </p>
-        </div>
+      <MapaHeader
+        ano={ANO}
+        nomeCandidato={candidato?.candidateName ?? null}
+      />
 
-        <div className="mapa-periodo">
-          <strong>{ANO}</strong>
-          <span>1º turno</span>
-        </div>
-      </header>
-
-      <section className="mapa-filtros">
-        <div className="mapa-filtro">
-          <label htmlFor="cargo">Cargo</label>
-          <select
-            id="cargo"
-            value={cargo}
-            onChange={(event) => {
-              setCargo(Number(event.target.value));
-              setPaginaCandidatos(1);
-            }}
-          >
-            {CARGOS.map((item) => (
-              <option key={item.codigo} value={item.codigo}>
-                {item.nome}
-              </option>
-            ))}
-          </select>
-        </div>
-
-
-        <div className="mapa-filtro">
-          <label htmlFor="busca-candidato">Pesquisar candidato</label>
-          <input
-            id="busca-candidato"
-            type="search"
-            value={busca}
-            onChange={(event) => {
-              setBusca(event.target.value);
-              setPaginaCandidatos(1);
-            }}
-            placeholder="Nome ou número do candidato..."
-          />
-        </div>
-
-        <div className="mapa-filtro">
-          <label htmlFor="candidato">Candidato</label>
-          <select
-            id="candidato"
-            value={candidato?.sqCandidato ?? ""}
-            disabled={carregandoCandidatos || candidatos.length === 0}
-            onChange={(event) => {
-              const selecionado = candidatos.find(
-                (item) => item.sqCandidato === event.target.value,
-              );
-              setCandidato(selecionado ?? null);
-            }}
-          >
-            {candidatos.length === 0 && (
-              <option value="">Nenhum candidato encontrado</option>
-            )}
-
-            {candidatos.map((item) => (
-              <option key={item.sqCandidato} value={item.sqCandidato}>
-                {item.candidateName} — {item.partyAbbreviation ?? "Sem partido"}
-                {item.candidateNumber ? ` (${item.candidateNumber})` : ""}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mapa-paginacao">
-          <button
-            type="button"
-            disabled={paginaCandidatos <= 1 || carregandoCandidatos}
-            onClick={() => setPaginaCandidatos((pagina) => pagina - 1)}
-          >
-            Anterior
-          </button>
-
-          <span>
-            Página {paginaCandidatos} de {totalPaginasCandidatos}
-          </span>
-
-          <button
-            type="button"
-            disabled={
-              paginaCandidatos >= totalPaginasCandidatos ||
-              carregandoCandidatos
-            }
-            onClick={() => setPaginaCandidatos((pagina) => pagina + 1)}
-          >
-            Próxima
-          </button>
-        </div>
-      </section>
+      <FiltrosMapa
+        cargos={CARGOS}
+        cargo={cargo}
+        busca={busca}
+        candidato={candidato}
+        candidatos={candidatos}
+        paginaCandidatos={paginaCandidatos}
+        totalPaginasCandidatos={totalPaginasCandidatos}
+        carregandoCandidatos={carregandoCandidatos}
+        onCargoChange={(novoCargo) => {
+          setCargo(novoCargo);
+          setPaginaCandidatos(1);
+        }}
+        onBuscaChange={(novaBusca) => {
+          setBusca(novaBusca);
+          setPaginaCandidatos(1);
+        }}
+        onCandidatoChange={(sqCandidato) => {
+          const selecionado = candidatos.find(
+            (item) => item.sqCandidato === sqCandidato,
+          );
+          setCandidato(selecionado ?? null);
+        }}
+        onPaginaChange={setPaginaCandidatos}
+      />
 
       {carregandoCandidatos && (
         <div className="mapa-mensagem">Carregando candidatos...</div>
@@ -494,22 +536,11 @@ export default function MapaEleitoral() {
         </section>
       )}
 
-      <section className="mapa-indicadores">
-        <article className="mapa-card">
-          <span>Municípios encontrados</span>
-          <strong>{totalMunicipios}</strong>
-        </article>
-
-        <article className="mapa-card">
-          <span>Municípios com votos</span>
-          <strong>{municipiosComVotos}</strong>
-        </article>
-
-        <article className="mapa-card">
-          <span>Total de votos</span>
-          <strong>{totalVotos.toLocaleString("pt-BR")}</strong>
-        </article>
-      </section>
+      <IndicadoresMapa
+        totalMunicipios={totalMunicipios}
+        municipiosComVotos={municipiosComVotos}
+        totalVotos={totalVotos}
+      />
 
       <div className="mapa-controles">
         <span>Visualização:</span>
@@ -564,8 +595,13 @@ export default function MapaEleitoral() {
 
           <div className="mapa-container">
             <MapContainer
-              center={[-5.2, -39.5]}
-              zoom={7}
+              key={`${candidato.sqCandidato}-${municipioSelecionado?.ibgeCode ?? "ceara"}`}
+              center={(
+                municipioSelecionado && municipioSelecionado.latitude !== null && municipioSelecionado.longitude !== null
+                  ? [municipioSelecionado.latitude, municipioSelecionado.longitude]
+                  : [-5.2, -39.5]
+              ) as [number, number]}
+              zoom={municipioSelecionado ? 12 : 7}
               minZoom={6}
               scrollWheelZoom
               className="mapa-leaflet"
@@ -611,7 +647,79 @@ export default function MapaEleitoral() {
                     </Popup>
                   </CircleMarker>
                 ))}
+
+              {municipioSelecionado && locaisVotacao.map((local) => (
+                <CircleMarker
+                  key={`${local.latitude}-${local.longitude}`}
+                  center={[local.latitude, local.longitude]}
+                  radius={8 + Math.min(local.secoes.length, 12)}
+                  pathOptions={{
+                    color: "#ffffff",
+                    weight: 2,
+                    fillColor: "#991956",
+                    fillOpacity: 0.9,
+                  }}
+                >
+
+                  <Popup>
+                    <div className="mapa-popup mapa-popup-local">
+                      <strong>
+                        {local.pollingPlaceName ?? "Local de votação não identificado"}
+                      </strong>
+
+                      {local.pollingPlaceNumber !== null && (
+                        <span>
+                          Local de votação: {local.pollingPlaceNumber}
+                        </span>
+                      )}
+
+                      {local.pollingPlaceAddress && (
+                        <small>{local.pollingPlaceAddress}</small>
+                      )}
+
+                      <span>
+                        {local.secoes.length} seção(ões) neste local
+                      </span>
+
+                      <div className="mapa-popup-secoes">
+
+                        {local.secoes.map((secao) => (
+                          <button
+                            key={`${secao.zone}-${secao.section}`}
+                            type="button"
+                            className="mapa-popup-secao"
+                            onClick={() => void selecionarSecao(secao)}
+                          >
+                            <strong>
+                              Zona {secao.zone} · Seção {secao.section}
+                            </strong>
+                            <span>
+                              {secao.votes.toLocaleString("pt-BR")} votos
+                            </span>
+                          </button>
+                        ))}
+
+                      </div>
+                    </div>
+                  </Popup>
+
+                </CircleMarker>
+              ))}
             </MapContainer>
+
+            {painelSecoesAberto && municipioSelecionado && (
+              <PainelSecoes
+                municipio={municipioSelecionado}
+                secoes={secoesMapa}
+                secaoSelecionada={secaoSelecionada}
+                votosSecao={votosSecao}
+                carregandoVotos={carregandoVotosSecao}
+                erroVotos={erroVotosSecao}
+                onFechar={() => setPainelSecoesAberto(false)}
+                onSelecionarSecao={(secao) => void selecionarSecao(secao)}
+              />
+            )}
+
           </div>
 
           {municipioSelecionado && (
@@ -633,30 +741,7 @@ export default function MapaEleitoral() {
               {!carregandoSecoes && !erroSecoes && (
                 <>
                   {secoes.length > 0 ? (
-                    <div className="mapa-tabela-container">
-                      <table className="mapa-tabela">
-                        <thead>
-                          <tr>
-                            <th>Zona</th>
-                            <th>Seção</th>
-                            <th>Votos</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {secoes.map((secao) => (
-                            <tr key={`${secao.zone}-${secao.section}`}>
-                              <td>{secao.zone}</td>
-                              <td>{secao.section}</td>
-                              <td>{secao.votes.toLocaleString("pt-BR")}</td>
-                              <td>{secao.latitude ?? "—"}</td>
-                              <td>{secao.longitude ?? "—"}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+                    <TabelaSecoes secoes={secoes} />
                   ) : (
                     <p>Nenhuma seção encontrada para este município.</p>
                   )}
