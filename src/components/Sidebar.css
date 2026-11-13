@@ -1,39 +1,65 @@
-﻿.sidebar {
+﻿
+.sidebar {
   width: 250px;
   min-height: 100vh;
-  background: #171923;
-  color: #ffffff;
-  padding: 28px 18px;
+  padding: 26px 16px;
+
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  gap: 30px;
+
+  background: var(--color-sidebar);
+  color: #FFFFFF;
 }
 
 .sidebar h2 {
-  font-size: 20px;
+  margin: 0;
   padding-left: 10px;
+
+  color: #FFFFFF;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
 }
 
 .sidebar nav {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
 }
 
 .sidebar nav a {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 13px 12px;
+
+  padding: 12px;
   border-radius: 8px;
-  color: #a0aec0;
+
+  color: #A8B2C2;
+  font-size: 13px;
+  font-weight: 500;
   text-decoration: none;
-  transition: 0.2s;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
 }
 
-.sidebar nav a:hover,
+.sidebar nav a:hover {
+  background: var(--color-sidebar-hover);
+  color: #FFFFFF;
+}
+
 .sidebar nav a.active {
-  background: #30364a;
-  color: #ffffff;
+  background: rgba(201, 32, 113, 0.16);
+  color: #FFFFFF;
+  box-shadow: inset 3px 0 0 var(--color-primary);
 }
 
+.sidebar nav a svg {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  color: inherit;
+}

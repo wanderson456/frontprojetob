@@ -52,6 +52,29 @@ export default function PainelSecoes({
     ? secoesFiltradas
     : secoesFiltradas.slice(0, 5);
 
+  const secoesNoMesmoLocal = secaoSelecionada
+    ? secoes.filter((secao) => {
+      if (secaoSelecionada.pollingPlaceNumber !== null) {
+        return (
+          secao.pollingPlaceNumber ===
+          secaoSelecionada.pollingPlaceNumber
+        );
+      }
+
+      if (
+        secaoSelecionada.latitude !== null &&
+        secaoSelecionada.longitude !== null
+      ) {
+        return (
+          secao.latitude === secaoSelecionada.latitude &&
+          secao.longitude === secaoSelecionada.longitude
+        );
+      }
+
+      return false;
+    }).length
+    : 0;
+
   useEffect(() => {
     if (secaoSelecionada) {
       setAbaAtiva("votacao");
@@ -66,10 +89,15 @@ export default function PainelSecoes({
   return (
     <aside className="mapa-painel-secoes">
       <header className="mapa-painel-header">
-        <div>
+        <div className="mapa-painel-header-info">
           <span>ACOMPANHAMENTO ELEITORAL</span>
           <h2>Seções de {municipio.municipality}</h2>
           <p>{secoes.length} seções encontradas</p>
+        </div>
+
+        <div className="mapa-painel-header-resumo">
+          <span>Votos do candidato no município</span>
+          <strong>{municipio.votes.toLocaleString("pt-BR")}</strong>
         </div>
 
         <button
@@ -83,23 +111,43 @@ export default function PainelSecoes({
 
       {secaoSelecionada && (
         <div className="mapa-painel-detalhe">
-          <span>SEÇÃO SELECIONADA</span>
+          <div className="mapa-painel-detalhe-principal">
+            <span>SEÇÃO SELECIONADA</span>
 
-          <h3>
-            Zona {secaoSelecionada.zone} · Seção {secaoSelecionada.section}
-          </h3>
+            <h3>
+              Zona {secaoSelecionada.zone} · Seção {secaoSelecionada.section}
+            </h3>
 
-          <strong>
-            {secaoSelecionada.votes.toLocaleString("pt-BR")} votos
-          </strong>
+            <strong>
+              {secaoSelecionada.votes.toLocaleString("pt-BR")} votos
+            </strong>
 
-          <p>
-            {secaoSelecionada.pollingPlaceName ?? "Local não identificado"}
-          </p>
+            <p>
+              {secaoSelecionada.pollingPlaceName ?? "Local não identificado"}
+            </p>
 
-          <small>
-            {secaoSelecionada.pollingPlaceAddress ?? "Endereço não informado"}
-          </small>
+            <small>
+              {secaoSelecionada.pollingPlaceAddress ?? "Endereço não informado"}
+            </small>
+          </div>
+
+          <div className="mapa-painel-detalhe-resumo">
+            <div>
+              <span>Local de votação</span>
+              <strong>
+                {secaoSelecionada.pollingPlaceNumber ?? "—"}
+              </strong>
+            </div>
+
+            <div>
+              <span>Seções neste local</span>
+              <strong>
+                {secoesNoMesmoLocal > 0
+                  ? secoesNoMesmoLocal
+                  : "Não identificado"}
+              </strong>
+            </div>
+          </div>
         </div>
       )}
 

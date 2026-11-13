@@ -2,7 +2,6 @@
 import {
   LayoutDashboard,
   Map,
-  Users,
   GitCompareArrows
 } from "lucide-react";
 import "./Sidebar.css";
@@ -10,7 +9,6 @@ import "./Sidebar.css";
 const links = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
   { to: "/mapa", label: "Mapa eleitoral", icon: Map },
-  { to: "/candidatos", label: "Candidatos", icon: Users },
   { to: "/comparacao", label: "Comparação", icon: GitCompareArrows },
 ];
 

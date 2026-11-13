@@ -132,16 +132,16 @@ export default function Dashboard() {
 
   const candidatosOrdenados = cargo
     ? [...cargo.candidates]
-        .sort((a, b) => b.votes - a.votes)
-        .slice(0, 10)
+      .sort((a, b) => b.votes - a.votes)
+      .slice(0, 10)
     : [];
 
   const dadosVotacao = cargo
     ? [
-        { name: "Votos válidos", value: cargo.validVotes },
-        { name: "Votos em branco", value: cargo.blankVotes },
-        { name: "Votos nulos", value: cargo.nullVotes },
-      ]
+      { name: "Votos válidos", value: cargo.validVotes },
+      { name: "Votos em branco", value: cargo.blankVotes },
+      { name: "Votos nulos", value: cargo.nullVotes },
+    ]
     : [];
 
   return (
@@ -319,62 +319,77 @@ export default function Dashboard() {
               <h2>Votação por candidato</h2>
               <p>Os dez candidatos mais votados</p>
 
-              <ResponsiveContainer width="100%" height={350}>
-                <BarChart
-                  data={candidatosOrdenados}
-                  layout="vertical"
-                  margin={{ top: 10, right: 20, left: 20, bottom: 10 }}
-                >
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    horizontal={false}
-                  />
-                  <XAxis type="number" />
-                  <YAxis
-                    type="category"
-                    dataKey="candidateName"
-                    width={130}
-                    tick={{ fontSize: 11 }}
-                  />
-                  <Tooltip />
-                  <Bar
-                    dataKey="votes"
-                    name="Votos"
-                    fill="#C92071"
-                    radius={[0, 5, 5, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+
+              <div className="chart-visual">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={candidatosOrdenados}
+                    layout="vertical"
+                    margin={{ top: 10, right: 20, left: 20, bottom: 10 }}
+                  >
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      horizontal={false}
+                    />
+                    <XAxis type="number" />
+                    <YAxis
+                      type="category"
+                      dataKey="candidateName"
+                      width={130}
+                      tick={{ fontSize: 11 }}
+                    />
+                    <Tooltip />
+                    <Bar
+                      dataKey="votes"
+                      name="Votos"
+                      fill="#C92071"
+                      radius={[0, 5, 5, 0]}
+                    />
+                  </BarChart>
+
+                </ResponsiveContainer>
+              </div>
+
+
+
+
+
             </article>
 
             <article className="chart-card">
               <h2>Composição da votação</h2>
               <p>Votos válidos, brancos e nulos</p>
 
-              <ResponsiveContainer width="100%" height={350}>
-                <PieChart>
-                  <Pie
-                    data={dadosVotacao}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="45%"
-                    outerRadius={105}
-                    innerRadius={65}
-                    paddingAngle={3}
-                    label
-                  >
-                    {dadosVotacao.map((entry, index) => (
-                      <Cell
-                        key={entry.name}
-                        fill={CORES_GRAFICO[index]}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
+
+              <div className="chart-visual">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={dadosVotacao}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="45%"
+                      outerRadius="58%"
+                      innerRadius="38%"
+                      paddingAngle={3}
+                      label
+                    >
+                      {dadosVotacao.map((entry, index) => (
+                        <Cell
+                          key={entry.name}
+                          fill={CORES_GRAFICO[index]}
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+
+
+
             </article>
           </div>
         </>

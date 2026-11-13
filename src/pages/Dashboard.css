@@ -275,3 +275,591 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================
+   DASHBOARD ELEITORAL - TELA ÚNICA
+========================================== */
+
+@media (min-width: 1051px) {
+  .dashboard {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-columns:
+      minmax(320px, 0.85fr)
+      minmax(0, 1.15fr);
+    grid-template-rows: auto auto auto minmax(0, 1fr);
+    gap: 10px;
+    overflow: hidden;
+  }
+
+  /* Cabeçalho */
+  .dashboard-header {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+
+  .dashboard-header h1 {
+    font-size: 21px;
+  }
+
+  .dashboard-header p {
+    margin: 3px 0 0;
+    font-size: 11px;
+  }
+
+  /* Filtros */
+  .dashboard-info {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns:
+      minmax(150px, 1.2fr)
+      minmax(180px, 1.5fr)
+      minmax(95px, 0.65fr)
+      minmax(100px, 0.65fr)
+      minmax(155px, 1fr);
+    align-items: end;
+    gap: 10px;
+    margin: 0;
+    flex-wrap: nowrap;
+  }
+
+  .dashboard-info > div:first-child {
+    min-width: 0;
+    align-self: center;
+  }
+
+  .dashboard-info h2 {
+    font-size: 17px;
+    margin-bottom: 3px;
+  }
+
+  .dashboard-info p {
+    font-size: 11px;
+  }
+
+  .dashboard-filter {
+    min-width: 0;
+    gap: 4px;
+  }
+
+  .dashboard-filter label {
+    font-size: 11px;
+  }
+
+  .dashboard-filter select,
+  .dashboard-filter input {
+    width: 100%;
+    min-width: 0;
+    height: 34px;
+    padding: 0 9px;
+    font-size: 12px;
+  }
+
+  /* Quatro indicadores em uma faixa */
+  .dashboard-stats {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0;
+  }
+
+  .stat-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 9px;
+  }
+
+  .stat-card span {
+    font-size: 11px;
+  }
+
+  .stat-card strong {
+    font-size: 19px;
+    white-space: nowrap;
+  }
+
+  /* Ranking à esquerda */
+  .ranking-section {
+    grid-column: 1;
+    grid-row: 4;
+    min-height: 0;
+    margin: 0;
+    padding: 13px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  .ranking-header {
+    margin-bottom: 12px;
+  }
+
+  .ranking-header h2 {
+    font-size: 16px;
+  }
+
+  .ranking-header span {
+    font-size: 11px;
+  }
+
+  .ranking-list {
+    gap: 9px;
+  }
+
+  .ranking-item {
+    grid-template-columns: 30px minmax(0, 1fr) 76px;
+    gap: 9px;
+  }
+
+  .ranking-position {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .ranking-candidate {
+    margin-bottom: 5px;
+  }
+
+  .ranking-candidate strong {
+    font-size: 11px;
+  }
+
+  .ranking-candidate span {
+    font-size: 10px;
+  }
+
+  .ranking-progress {
+    height: 5px;
+  }
+
+  .ranking-votes {
+    gap: 2px;
+  }
+
+  .ranking-votes strong {
+    font-size: 12px;
+  }
+
+  .ranking-votes span {
+    font-size: 10px;
+  }
+
+  /* Gráficos à direita */
+  .dashboard-charts {
+    grid-column: 2;
+    grid-row: 4;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .chart-card {
+    min-height: 0;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chart-card h2 {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+
+  .chart-card p {
+    font-size: 10px;
+    margin-bottom: 3px;
+  }
+
+  /* Mensagens de carregamento e erro */
+  .dashboard > p {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 12px;
+  }
+}
+
+/* Telas menores mantêm a rolagem natural */
+@media (max-width: 1050px) {
+  .dashboard {
+    height: auto;
+    min-height: 0;
+    display: block;
+    overflow: visible;
+  }
+
+  .dashboard-header {
+    margin-bottom: 20px;
+  }
+
+  .dashboard-info {
+    display: flex;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .ranking-section {
+    margin-top: 24px;
+    overflow: visible;
+  }
+
+  .dashboard-charts {
+    margin-top: 20px;
+  }
+}
+@media (min-width: 1051px) {
+  .chart-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .chart-visual {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+  }
+}
+
+
+/* ==========================================
+   GRÁFICOS RESPONSIVOS - CELULARES E TABLETS
+========================================== */
+
+@media (max-width: 1050px) {
+  .dashboard-charts {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+    overflow: visible;
+  }
+
+  .chart-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    min-height: 320px;
+    padding: 16px;
+    overflow: visible;
+  }
+
+  .chart-visual {
+    display: block;
+    width: 100%;
+    height: 260px;
+    min-height: 260px;
+    flex: 0 0 260px;
+  }
+}
+
+/* Ajustes para celulares estreitos */
+@media (max-width: 600px) {
+  .chart-card {
+    min-height: 300px;
+    padding: 12px;
+  }
+
+  .chart-visual {
+    height: 240px;
+    min-height: 240px;
+    flex-basis: 240px;
+  }
+
+  .chart-card h2 {
+    font-size: 16px;
+  }
+
+  .chart-card p {
+    font-size: 12px;
+  }
+}
+
+/* ==========================================
+   ELEIÇÕES CEARÁ — GLASSMORPHISM
+========================================== */
+
+.dashboard {
+  position: relative;
+  isolation: isolate;
+}
+
+.dashboard::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 12% 10%,
+      rgba(201, 32, 113, 0.10),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 88% 85%,
+      rgba(181, 182, 242, 0.20),
+      transparent 38%
+    ),
+    linear-gradient(135deg, #f8f7fb, #f0f1f8);
+}
+
+/* Superfícies translúcidas */
+.dashboard-info,
+.stat-card,
+.ranking-section,
+.chart-card {
+  background: rgba(255, 255, 255, 0.70);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 8px 24px rgba(31, 41, 55, 0.045),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  backdrop-filter: blur(14px) saturate(135%);
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+}
+
+/* Faixa de filtros */
+.dashboard-info {
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+/* Indicadores */
+.stat-card {
+  border-radius: 12px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 12px 28px rgba(31, 41, 55, 0.08);
+}
+
+/* Ranking */
+.ranking-section,
+.chart-card {
+  border-radius: 14px;
+}
+
+/* Campos dos filtros */
+.dashboard-filter select,
+.dashboard-filter input {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(203, 213, 225, 0.8);
+}
+
+.dashboard-filter select:focus,
+.dashboard-filter input:focus {
+  border-color: #c92071;
+  box-shadow: 0 0 0 3px rgba(201, 32, 113, 0.10);
+}
+
+/* Respeita usuários que preferem menos animações */
+@media (prefers-reduced-motion: reduce) {
+  .stat-card {
+    transition: none;
+  }
+
+  .stat-card:hover {
+    transform: none;
+  }
+}
+
+/* ==========================================
+   ELEIÇÕES CEARÁ — PREMIUM DASHBOARD
+========================================== */
+
+/* Remove o fundo decorativo anterior */
+.dashboard::before {
+  display: none;
+}
+
+/* Cabeçalho */
+.dashboard-header h1 {
+  color: var(--color-text-primary);
+  font-weight: 750;
+  letter-spacing: -0.6px;
+}
+
+.dashboard-header p {
+  color: var(--color-text-secondary);
+}
+
+/* Superfícies sólidas */
+.dashboard-info,
+.stat-card,
+.ranking-section,
+.chart-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Filtros */
+.dashboard-info {
+  padding: 12px 14px;
+}
+
+.dashboard-info h2 {
+  color: var(--color-text-primary);
+}
+
+.dashboard-info p,
+.dashboard-filter label {
+  color: var(--color-text-secondary);
+}
+
+.dashboard-filter select,
+.dashboard-filter input {
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  color: var(--color-text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.dashboard-filter select:focus,
+.dashboard-filter input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(201, 32, 113, 0.09);
+  outline: none;
+}
+
+/* Indicadores */
+.stat-card {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: none;
+  border-color: #e7b5cd;
+  background: #ffffff;
+  box-shadow: 0 5px 16px rgba(23, 32, 51, 0.07);
+}
+
+.stat-card span {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.stat-card strong {
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ranking */
+.ranking-section {
+  padding: 18px;
+}
+
+.ranking-header {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 12px;
+}
+
+.ranking-header h2 {
+  color: var(--color-text-primary);
+}
+
+.ranking-header span {
+  color: var(--color-primary);
+}
+
+.ranking-position {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+}
+
+.ranking-candidate strong {
+  color: var(--color-text-primary);
+}
+
+.ranking-candidate span,
+.ranking-votes span {
+  color: var(--color-text-secondary);
+}
+
+.ranking-progress {
+  background: #EDF0F4;
+}
+
+.ranking-progress-bar {
+  background: var(--color-primary);
+}
+
+.ranking-votes strong {
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Gráficos */
+.chart-card {
+  padding: 16px;
+}
+
+.chart-card h2 {
+  color: var(--color-text-primary);
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.chart-card p {
+  color: var(--color-text-secondary);
+}
+
+/* Transições discretas */
+.ranking-section,
+.chart-card {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ranking-section:hover,
+.chart-card:hover {
+  border-color: #d9dfe8;
+  box-shadow: 0 5px 16px rgba(23, 32, 51, 0.06);
+}
+
+/* Acessibilidade */
+.dashboard button:focus-visible,
+.dashboard select:focus-visible,
+.dashboard input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+  .dashboard-info,
+  .stat-card,
+  .ranking-section,
+  .chart-card {
+    border-radius: 10px;
+  }
+
+  .dashboard-info {
+    padding: 14px;
+  }
+
+  .ranking-section,
+  .chart-card {
+    padding: 14px;
+  }
+}
