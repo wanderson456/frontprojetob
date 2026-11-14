@@ -64,3 +64,19 @@
     overflow: hidden;
   }
 }
+
+/* Container principal (envolve sidebar + conteúdo) */
+.layout-principal {
+  display: flex;
+  height: 100vh;       /* Ocupa exatamente a tela */
+  overflow: hidden;    /* Impede a página inteira de rolar */
+}
+
+/* Container do conteúdo (onde ficam as páginas) */
+.layout-conteudo {
+  flex: 1;
+  height: 100vh;
+  overflow: hidden;    /* O conteúdo não vaza */
+  display: flex;
+  flex-direction: column;
+}

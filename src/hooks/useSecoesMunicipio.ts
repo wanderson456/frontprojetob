@@ -21,8 +21,8 @@ export function useSecoesMunicipio({ candidato }: UseSecoesMunicipioProps) {
   const [carregandoSecoes, setCarregandoSecoes] = useState(false);
   const [erroSecoes, setErroSecoes] = useState("");
 
-const sqCandidato = candidato?.sqCandidato;
-
+  // LIMPA O ESTADO QUANDO O CANDIDATO MUDA
+  const sqCandidato = candidato?.sqCandidato;
   useEffect(() => {
     setMunicipioSelecionado(null);
     setSecoes([]);
@@ -31,10 +31,11 @@ const sqCandidato = candidato?.sqCandidato;
     setPaginaSecoes(1);
     setTotalPaginasSecoes(1);
     setErroSecoes("");
-  }, [sqCandidato]); 
+  }, [sqCandidato]);
 
   async function carregarSecoes(municipio: CandidateGeoMunicipality, pagina: number = 1) {
     if (!candidato) return;
+
     try {
       setMunicipioSelecionado(municipio);
       setCarregandoSecoes(true);
@@ -42,20 +43,46 @@ const sqCandidato = candidato?.sqCandidato;
       setPaginaSecoes(pagina);
 
       const [respostaTabela, primeiraPaginaMapa] = await Promise.all([
-        getMunicipioSecoes({ municipalityCode: municipio.ibgeCode, sqCandidato: candidato.sqCandidato, ano: ANO, turno: TURNO, pagina, limite: LIMITE_TABELA }),
-        getMunicipioSecoes({ municipalityCode: municipio.ibgeCode, sqCandidato: candidato.sqCandidato, ano: ANO, turno: TURNO, pagina: 1, limite: LIMITE_MAPA }),
+        getMunicipioSecoes({
+          municipalityCode: municipio.ibgeCode,
+          sqCandidato: candidato.sqCandidato,
+          ano: ANO,
+          turno: TURNO,
+          pagina,
+          limite: LIMITE_TABELA,
+        }),
+        getMunicipioSecoes({
+          municipalityCode: municipio.ibgeCode,
+          sqCandidato: candidato.sqCandidato,
+          ano: ANO,
+          turno: TURNO,
+          pagina: 1,
+          limite: LIMITE_MAPA,
+        }),
       ]);
 
       const demaisPaginasMapa = await Promise.all(
         Array.from({ length: Math.max(0, primeiraPaginaMapa.totalPages - 1) }, (_, index) =>
-          getMunicipioSecoes({ municipalityCode: municipio.ibgeCode, sqCandidato: candidato.sqCandidato, ano: ANO, turno: TURNO, pagina: index + 2, limite: LIMITE_MAPA })
+          getMunicipioSecoes({
+            municipalityCode: municipio.ibgeCode,
+            sqCandidato: candidato.sqCandidato,
+            ano: ANO,
+            turno: TURNO,
+            pagina: index + 2,
+            limite: LIMITE_MAPA,
+          })
         )
       );
 
       setSecoes(respostaTabela.items);
       setTotalSecoes(respostaTabela.total);
       setTotalPaginasSecoes(respostaTabela.totalPages);
-      setSecoesMapa([...primeiraPaginaMapa.items, ...demaisPaginasMapa.flatMap((item) => item.items)]);
+      
+      // 👇 TIPAGEM CORRETA NO FLATMAP
+      setSecoesMapa([
+        ...primeiraPaginaMapa.items, 
+        ...demaisPaginasMapa.flatMap((pagina) => pagina.items)
+      ]);
     } catch (error) {
       setSecoes([]);
       setSecoesMapa([]);
@@ -67,5 +94,15 @@ const sqCandidato = candidato?.sqCandidato;
     }
   }
 
-  return { municipioSelecionado, secoes, secoesMapa, totalSecoes, paginaSecoes, totalPaginasSecoes, carregandoSecoes, erroSecoes, carregarSecoes };
+  return {
+    municipioSelecionado,
+    secoes,
+    secoesMapa,
+    totalSecoes,
+    paginaSecoes,
+    totalPaginasSecoes,
+    carregandoSecoes,
+    erroSecoes,
+    carregarSecoes,
+  };
 }

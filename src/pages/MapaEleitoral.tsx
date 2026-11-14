@@ -242,6 +242,10 @@ export default function MapaEleitoral() {
                 onSelecionarSecao={(secao) => {
                   void selecionarSecao(secao);
                 }}
+
+                anoSelecionado={ANO}
+                turnoSelecionado={1}
+                codigoTseMunicipio={String(municipioSelecionado?.municipality || "")}
               />
             </div>
 
@@ -255,6 +259,12 @@ export default function MapaEleitoral() {
                 erroVotos={erroVotosSecao}
                 onFechar={fecharPainelSecoes}
                 onSelecionarSecao={(secao) => void selecionarSecao(secao)}
+                nomeCandidatoA={candidato?.candidateName || ""}
+                nomeCandidatoB=""
+                cargoSelecionadoId={cargo}
+                numeroCandidatoA={String(candidato?.candidateNumber || "")}
+                numeroCandidatoB=""
+
               />
             )}
           </div>

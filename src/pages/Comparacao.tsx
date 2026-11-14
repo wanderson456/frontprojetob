@@ -95,29 +95,24 @@ export default function Comparacao() {
   const cargo: OfficeResult | undefined = resultado?.offices.find((office) => office.officeCode === cargoSelecionado);
   const candidatosOrdenados: CandidateResult[] = cargo ? [...cargo.candidates].sort((a, b) => b.votes - a.votes) : [];
 
-  // 👇 CORREÇÃO: Força a atualização dos IDs quando o cargo ou a lista mudar
   useEffect(() => {
     if (candidatosOrdenados.length > 0) {
-      // Pega os IDs dos dois primeiros candidatos
       const primeiro = candidatosOrdenados[0]?.candidateId ?? "";
       const segundo = candidatosOrdenados[1]?.candidateId ?? "";
 
-      // Se o candidato atual não existir na nova lista, substitui pelo primeiro
       const idAValido = candidatosOrdenados.some((c) => c.candidateId === candidatoAId);
       const idBValido = candidatosOrdenados.some((c) => c.candidateId === candidatoBId);
 
       if (!idAValido) setCandidatoAId(primeiro);
       if (!idBValido || (idBValido && segundo !== candidatoBId && primeiro === candidatoBId)) {
-         // Se o B for igual ao A, ou não existir, define o segundo (ou o que não for o A)
-         setCandidatoBId(segundo !== primeiro ? segundo : candidatosOrdenados.find(c => c.candidateId !== candidatoAId)?.candidateId ?? "");
+        setCandidatoBId(segundo !== primeiro ? segundo : candidatosOrdenados.find(c => c.candidateId !== candidatoAId)?.candidateId ?? "");
       }
     } else {
-      // Se não houver candidatos para o cargo, limpa os IDs
       setCandidatoAId("");
       setCandidatoBId("");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cargoSelecionado, candidatosOrdenados.length]); // Reage à troca de cargo ou de tamanho da lista
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cargoSelecionado, candidatosOrdenados.length]);
 
   const candidatoA = candidatosOrdenados.find((c) => String(c.candidateId) === String(candidatoAId)) || null;
   const candidatoB = candidatosOrdenados.find((c) => String(c.candidateId) === String(candidatoBId)) || null;
@@ -131,11 +126,11 @@ export default function Comparacao() {
   }
 
   const { candidatoA: sqCandidatoA, candidatoB: sqCandidatoB, carregando: carregandoIdentificadores, erro: erroIdentificadores } = useSqCandidatosComparacao({
-    candidatoA: candidatoA || undefined, 
-    candidatoB: candidatoB || undefined, 
-    ano: anoSelecionado, 
-    turno: turnoSelecionado, 
-    cargo: cargoSelecionado, 
+    candidatoA: candidatoA || undefined,
+    candidatoB: candidatoB || undefined,
+    ano: anoSelecionado,
+    turno: turnoSelecionado,
+    cargo: cargoSelecionado,
     habilitado: abaAtiva === "geografica" && Boolean(candidatoA && candidatoB),
   });
 
@@ -157,7 +152,6 @@ export default function Comparacao() {
 
   const municipiosComCoordenadas = mapaA.municipios.filter((m) => m.latitude !== null && m.longitude !== null);
 
-  // Sincroniza o select visual com o estado real (garante que o option selecionado exista)
   const selectValueA = candidatosOrdenados.some(c => c.candidateId === candidatoAId) ? candidatoAId : "";
   const selectValueB = candidatosOrdenados.some(c => c.candidateId === candidatoBId) ? candidatoBId : "";
 
@@ -189,13 +183,13 @@ export default function Comparacao() {
         </div>
         <div className="comparacao-campo">
           <label>Cargo eleitoral</label>
-          <select 
-            value={cargoSelecionado ?? ""} 
+          <select
+            value={cargoSelecionado ?? ""}
             onChange={(e) => {
               setCargoSelecionado(Number(e.target.value));
-              setCandidatoAId(""); // Limpa para forçar o useEffect a buscar os novos
+              setCandidatoAId("");
               setCandidatoBId("");
-            }} 
+            }}
             disabled={!resultado || carregando}
           >
             {resultado?.offices.map((office) => <option key={office.officeCode} value={office.officeCode}>{office.officeName}</option>)}
@@ -240,111 +234,122 @@ export default function Comparacao() {
             <button type="button" className={abaAtiva === "geografica" ? "ativa" : ""} onClick={() => setAbaAtiva("geografica")}>02 Comparação geográfica</button>
           </nav>
 
-          {abaAtiva === "votos" && (
-            <>
-              <section className="comparacao-resultados">
-                <article className="comparacao-candidato comparacao-candidato-a">
-                  <div className="comparacao-candidato-topo"><span>CANDIDATO A</span><span>{candidatoA?.partyAbbreviation || "-"}</span></div>
-                  <h3>{candidatoA?.candidateName || "Selecione o candidato A"}</h3>
-                  <p className="comparacao-partido">{candidatoA?.partyName || "-"}</p>
-                  <div className="comparacao-metricas">
-                    <div><span>Votos recebidos</span><strong>{formatarNumero(candidatoA?.votes || 0)}</strong></div>
-                    <div><span>Percentual</span><strong>{formatarPercentual(candidatoA?.percentage || 0)}</strong></div>
+          <div className="comparacao-conteudo">
+            {abaAtiva === "votos" && (
+              <>
+                <section className="comparacao-resultados">
+                  <article className="comparacao-candidato comparacao-candidato-a">
+                    <div className="comparacao-candidato-topo"><span>CANDIDATO A</span><span>{candidatoA?.partyAbbreviation || "-"}</span></div>
+                    <h3>{candidatoA?.candidateName || "Selecione o candidato A"}</h3>
+                    <p className="comparacao-partido">{candidatoA?.partyName || "-"}</p>
+                    <div className="comparacao-metricas">
+                      <div><span>Votos recebidos</span><strong>{formatarNumero(candidatoA?.votes || 0)}</strong></div>
+                      <div><span>Percentual</span><strong>{formatarPercentual(candidatoA?.percentage || 0)}</strong></div>
+                    </div>
+                  </article>
+                  <article className="comparacao-candidato comparacao-candidato-b">
+                    <div className="comparacao-candidato-topo"><span>CANDIDATO B</span><span>{candidatoB?.partyAbbreviation || "-"}</span></div>
+                    <h3>{candidatoB?.candidateName || "Selecione o candidato B"}</h3>
+                    <p className="comparacao-partido">{candidatoB?.partyName || "-"}</p>
+                    <div className="comparacao-metricas">
+                      <div><span>Votos recebidos</span><strong>{formatarNumero(candidatoB?.votes || 0)}</strong></div>
+                      <div><span>Percentual</span><strong>{formatarPercentual(candidatoB?.percentage || 0)}</strong></div>
+                    </div>
+                  </article>
+                </section>
+                <section className="comparacao-diferenca">
+                  <div><span>Diferença de votos</span><strong>{formatarNumero(diferencaVotos)}</strong></div>
+                  <div><span>Diferença percentual</span><strong>{formatarPercentual(diferencaPercentual)}</strong></div>
+                  <p>{diferencaVotos === 0 ? "Os candidatos terminaram empatados em votos." : (candidatoA?.votes || 0) > (candidatoB?.votes || 0) ? `${candidatoA?.candidateName} ficou à frente na votação.` : `${candidatoB?.candidateName} ficou à frente na votação.`}</p>
+                </section>
+                <section className="comparacao-grafico">
+                  <div className="comparacao-grafico-header"><h2>Desempenho comparativo</h2><p>Quantidade de votos por candidato</p></div>
+                  <div className="comparacao-grafico-visual">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={dadosGrafico} layout="vertical" margin={{ top: 10, right: 25, left: 20, bottom: 10 }}>
+                        <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                        <XAxis type="number" />
+                        <YAxis type="category" dataKey="nome" width={150} tick={{ fontSize: 11 }} />
+                        <Tooltip />
+                        <Bar dataKey="votos" name="Votos" radius={[0, 6, 6, 0]} barSize={30}>
+                          {dadosGrafico.map((item, index) => <Cell key={item.nome} fill={CORES[index]} />)}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
                   </div>
-                </article>
-                <article className="comparacao-candidato comparacao-candidato-b">
-                  <div className="comparacao-candidato-topo"><span>CANDIDATO B</span><span>{candidatoB?.partyAbbreviation || "-"}</span></div>
-                  <h3>{candidatoB?.candidateName || "Selecione o candidato B"}</h3>
-                  <p className="comparacao-partido">{candidatoB?.partyName || "-"}</p>
-                  <div className="comparacao-metricas">
-                    <div><span>Votos recebidos</span><strong>{formatarNumero(candidatoB?.votes || 0)}</strong></div>
-                    <div><span>Percentual</span><strong>{formatarPercentual(candidatoB?.percentage || 0)}</strong></div>
-                  </div>
-                </article>
-              </section>
-              <section className="comparacao-diferenca">
-                <div><span>Diferença de votos</span><strong>{formatarNumero(diferencaVotos)}</strong></div>
-                <div><span>Diferença percentual</span><strong>{formatarPercentual(diferencaPercentual)}</strong></div>
-                <p>{diferencaVotos === 0 ? "Os candidatos terminaram empatados em votos." : (candidatoA?.votes || 0) > (candidatoB?.votes || 0) ? `${candidatoA?.candidateName} ficou à frente na votação.` : `${candidatoB?.candidateName} ficou à frente na votação.`}</p>
-              </section>
-              <section className="comparacao-grafico">
-                <div className="comparacao-grafico-header"><h2>Desempenho comparativo</h2><p>Quantidade de votos por candidato</p></div>
-                <div className="comparacao-grafico-visual">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={dadosGrafico} layout="vertical" margin={{ top: 10, right: 25, left: 20, bottom: 10 }}>
-                      <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-                      <XAxis type="number" />
-                      <YAxis type="category" dataKey="nome" width={150} tick={{ fontSize: 11 }} />
-                      <Tooltip />
-                      <Bar dataKey="votos" name="Votos" radius={[0, 6, 6, 0]}>{dadosGrafico.map((item, index) => <Cell key={item.nome} fill={CORES[index]} />)}</Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </section>
-            </>
-          )}
+                </section>
+              </>
+            )}
 
-          {abaAtiva === "geografica" && (
-            <section className="comparacao-geografica">
-              <header className="comparacao-geografica-header">
-                <h2>Distribuição geográfica dos votos</h2>
-                <p>Compare a presença eleitoral dos candidatos nos municípios do Ceará.</p>
-              </header>
+            {abaAtiva === "geografica" && (
+              <section className="comparacao-geografica">
+                <header className="comparacao-geografica-header">
+                  <h2>Distribuição geográfica dos votos</h2>
+                  <p>Compare a presença eleitoral dos candidatos nos municípios do Ceará.</p>
+                </header>
 
-              {carregandoIdentificadores && <p className="comparacao-mensagem">Carregando...</p>}
-              {erroIdentificadores && <div className="comparacao-erro">{erroIdentificadores}</div>}
-              {!carregandoIdentificadores && !erroIdentificadores && sqCandidatoA && sqCandidatoB && carregandoMapas && <p className="comparacao-mensagem">Carregando mapas...</p>}
-              {erroMapas && <div className="comparacao-erro">{erroMapas}</div>}
-              {erroMalha && <div className="comparacao-erro">{erroMalha}</div>}
+                {carregandoIdentificadores && <p className="comparacao-mensagem">Carregando...</p>}
+                {erroIdentificadores && <div className="comparacao-erro">{erroIdentificadores}</div>}
+                {!carregandoIdentificadores && !erroIdentificadores && sqCandidatoA && sqCandidatoB && carregandoMapas && <p className="comparacao-mensagem">Carregando mapas...</p>}
+                {erroMapas && <div className="comparacao-erro">{erroMapas}</div>}
+                {erroMalha && <div className="comparacao-erro">{erroMalha}</div>}
 
-              {!carregandoIdentificadores && !erroIdentificadores && !carregandoMapas && !erroMapas && !erroMalha && sqCandidatoA && sqCandidatoB && malha && (
-                <div 
-                  style={{ 
-                    display: "grid", 
-                    gridTemplateColumns: painelSecoesAberto && munMapaSelecionado ? "1fr 400px" : "1fr", 
-                    gap: "1rem",
-                    height: "calc(100vh - 340px)",
-                    minHeight: "500px",
-                    overflow: "hidden"
-                  }}
-                >
-                  <div className="mapa-container" style={{ height: "100%", width: "100%", borderRadius: "12px", overflow: "hidden", border: "1px solid #e2e8f0", background: "#fff" }}>
-                    <MapaLeaflet
-                      key={`mapa-${candidatoAId}-${candidatoBId}`}
-                      candidatoId={candidatoAId}
-                      malha={malha}
-                      municipios={mapaA.municipios}
-                      municipiosComCoordenadas={municipiosComCoordenadas}
-                      secoesMapa={secoesMapa}
-                      municipioSelecionado={munMapaSelecionado}
-                      modo="municipios"
-                      onSelecionarMunicipio={(municipio) => {
-                        void carregarSecoes(municipio, 1);
-                      }}
-                      onSelecionarSecao={(secao) => {
-                        void selecionarSecao(secao);
-                      }}
-                    />
-                  </div>
-
-                  {painelSecoesAberto && munMapaSelecionado && (
-                    <div style={{ height: "100%", overflow: "hidden", background: "#fff", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
-                      <PainelSecoes
-                        municipio={munMapaSelecionado}
-                        secoes={secoesMapa}
-                        secaoSelecionada={secaoSelecionada}
-                        votosSecao={votosSecao}
-                        carregandoVotos={carregandoVotosSecao}
-                        erroVotos={erroVotosSecao}
-                        onFechar={fecharPainelSecoes}
-                        onSelecionarSecao={(secao) => void selecionarSecao(secao)}
+                {!carregandoIdentificadores && !erroIdentificadores && !carregandoMapas && !erroMapas && !erroMalha && sqCandidatoA && sqCandidatoB && malha && (
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: painelSecoesAberto && munMapaSelecionado ? "1fr 400px" : "1fr",
+                      gap: "1rem",
+                      flex: 1,
+                      minHeight: 0,
+                      overflow: "hidden"
+                    }}
+                  ><div className="mapa-container" style={{ height: "100%", minHeight: "500px", width: "100%", borderRadius: "12px", overflow: "hidden", border: "1px solid #e2e8f0", background: "#fff" }}>
+                      <MapaLeaflet
+                        key={`mapa-${candidatoAId}-${candidatoBId}`}
+                        candidatoId={candidatoAId}
+                        malha={malha}
+                        municipios={mapaA.municipios}
+                        municipiosComCoordenadas={municipiosComCoordenadas}
+                        secoesMapa={secoesMapa}
+                        municipioSelecionado={munMapaSelecionado}
+                        modo="municipios"
+                        onSelecionarMunicipio={(municipio) => {
+                          void carregarSecoes(municipio, 1);
+                        }}
+                        onSelecionarSecao={(secao) => {
+                          void selecionarSecao(secao);
+                        }}
+                        anoSelecionado={anoSelecionado}
+                        turnoSelecionado={turnoSelecionado}
+                        codigoTseMunicipio={municipioSelecionado}
                       />
                     </div>
-                  )}
-                </div>
-              )}
-            </section>
-          )}
+
+                    {painelSecoesAberto && munMapaSelecionado && (
+                      <div style={{ height: "100%", overflow: "hidden", background: "#fff", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
+                        <PainelSecoes
+                          municipio={munMapaSelecionado}
+                          secoes={secoesMapa}
+                          secaoSelecionada={secaoSelecionada}
+                          votosSecao={votosSecao}
+                          carregandoVotos={carregandoVotosSecao}
+                          erroVotos={erroVotosSecao}
+                          onFechar={fecharPainelSecoes}
+                          onSelecionarSecao={(secao) => void selecionarSecao(secao)}
+                          nomeCandidatoA={candidatoA?.candidateName || ""}
+                          nomeCandidatoB={candidatoB?.candidateName || ""}
+                          cargoSelecionadoId={cargoSelecionado}
+                          numeroCandidatoA={String(candidatoA?.candidateNumber || "")}
+                          numeroCandidatoB={String(candidatoB?.candidateNumber || "")}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+              </section>
+            )}
+          </div>
         </>
       )}
     </section>

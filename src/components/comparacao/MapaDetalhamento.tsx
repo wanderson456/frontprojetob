@@ -17,12 +17,21 @@ interface MapaDetalhamentoProps {
   carregandoVotos: boolean;
   erroVotos: string;
   onFecharPainel: () => void;
+  nomeCandidatoA: string;
+  nomeCandidatoB: string;
+  cargoSelecionadoId: number | null;
+  numeroCandidatoA: string;
+  numeroCandidatoB: string;
+  anoSelecionado: number;
+  turnoSelecionado: number;
+  codigoTseMunicipio: string;
 }
 
 export default function MapaDetalhamento({
   candidatoA,
   malha,
   municipios,
+  codigoTseMunicipio,
   municipiosComCoordenadas,
   secoesMapa,
   municipioSelecionado,
@@ -34,6 +43,13 @@ export default function MapaDetalhamento({
   carregandoVotos,
   erroVotos,
   onFecharPainel,
+  nomeCandidatoA,
+  nomeCandidatoB,
+  cargoSelecionadoId,
+  numeroCandidatoA,
+  numeroCandidatoB,
+  anoSelecionado,
+  turnoSelecionado,
 }: MapaDetalhamentoProps) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: painelAberto && municipioSelecionado ? "1fr 400px" : "1fr", gap: "1rem", transition: "all 0.3s" }}>
@@ -48,6 +64,9 @@ export default function MapaDetalhamento({
           modo="municipios"
           onSelecionarMunicipio={onSelecionarMunicipio}
           onSelecionarSecao={onSelecionarSecao}
+          anoSelecionado={anoSelecionado}
+          turnoSelecionado={turnoSelecionado}
+          codigoTseMunicipio={codigoTseMunicipio}
         />
       </div>
 
@@ -61,6 +80,11 @@ export default function MapaDetalhamento({
           erroVotos={erroVotos}
           onFechar={onFecharPainel}
           onSelecionarSecao={onSelecionarSecao}
+          nomeCandidatoA={nomeCandidatoA}
+          nomeCandidatoB={nomeCandidatoB}
+          cargoSelecionadoId={cargoSelecionadoId}
+          numeroCandidatoA={numeroCandidatoA}
+          numeroCandidatoB={numeroCandidatoB}
         />
       )}
     </div>
