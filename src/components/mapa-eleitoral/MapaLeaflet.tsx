@@ -1,4 +1,3 @@
-
 import {
     MapContainer,
     TileLayer,
@@ -106,21 +105,7 @@ export default function MapaLeaflet({
         <span>Votos: ${municipio.votes.toLocaleString("pt-BR")}</span>
         <small>Código IBGE: ${municipio.ibgeCode}</small>
       </div>
-      
     `);
-        layer.bindPopup(
-            `
-    <div class="mapa-popup">
-      <strong>${municipio.municipality}</strong>
-      <span>Votos: ${municipio.votes.toLocaleString("pt-BR")}</span>
-      <small>Código IBGE: ${municipio.ibgeCode}</small>
-    </div>
-  `,
-            {
-                autoPan: true,
-                autoPanPadding: [40, 40],
-            },
-        );
 
         layer.on({
             click: () => {
@@ -234,9 +219,9 @@ export default function MapaLeaflet({
                 ))}
 
             {municipioSelecionado &&
-                locaisVotacao.map((local) => (
+                locaisVotacao.map((local, index) => (
                     <CircleMarker
-                        key={`${local.latitude}-${local.longitude}`}
+                        key={`local-${local.pollingPlaceNumber ?? 'x'}-${index}-${local.latitude}-${local.longitude}`}
                         center={[local.latitude, local.longitude]}
                         radius={8 + Math.min(local.secoes.length, 12)}
                         pathOptions={{

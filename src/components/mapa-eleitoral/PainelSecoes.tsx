@@ -1,12 +1,9 @@
-
 import { useEffect, useState } from "react";
-
 import type {
   CandidateGeoMunicipality,
   SectionItem,
   SectionVoteItem,
 } from "../../types/eleicoes";
-
 import ResultadoSecao from "./ResultadoSecao";
 
 type AbaPainel = "votacao" | "secoes";
@@ -52,28 +49,7 @@ export default function PainelSecoes({
     ? secoesFiltradas
     : secoesFiltradas.slice(0, 5);
 
-  const secoesNoMesmoLocal = secaoSelecionada
-    ? secoes.filter((secao) => {
-      if (secaoSelecionada.pollingPlaceNumber !== null) {
-        return (
-          secao.pollingPlaceNumber ===
-          secaoSelecionada.pollingPlaceNumber
-        );
-      }
 
-      if (
-        secaoSelecionada.latitude !== null &&
-        secaoSelecionada.longitude !== null
-      ) {
-        return (
-          secao.latitude === secaoSelecionada.latitude &&
-          secao.longitude === secaoSelecionada.longitude
-        );
-      }
-
-      return false;
-    }).length
-    : 0;
 
   useEffect(() => {
     if (secaoSelecionada) {
@@ -87,16 +63,16 @@ export default function PainelSecoes({
   }
 
   return (
-    <aside className="mapa-painel-secoes">
-      <header className="mapa-painel-header">
+    <aside className="mapa-painel-secoes" style={{ height: "100%", display: "flex", flexDirection: "column", background: "#fff", borderRadius: "8px", border: "1px solid #eaeaea", overflow: "hidden" }}>
+      <header className="mapa-painel-header" style={{ flexShrink: 0, padding: "1rem", borderBottom: "1px solid #eee" }}>
         <div className="mapa-painel-header-info">
-          <span>ACOMPANHAMENTO ELEITORAL</span>
-          <h2>Seções de {municipio.municipality}</h2>
-          <p>{secoes.length} seções encontradas</p>
+          <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#666", textTransform: "uppercase", letterSpacing: "0.5px" }}>ACOMPANHAMENTO ELEITORAL</span>
+          <h2 style={{ margin: "0.25rem 0 0 0", fontSize: "1.1rem" }}>Seções de {municipio.municipality}</h2>
+          <p style={{ margin: 0, fontSize: "0.8rem", color: "#666" }}>{secoes.length} seções encontradas</p>
         </div>
 
-        <div className="mapa-painel-header-resumo">
-          <span>Votos do candidato no município</span>
+        <div className="mapa-painel-header-resumo" style={{ marginTop: "0.5rem", background: "#f8f9fa", padding: "0.5rem", borderRadius: "6px", display: "flex", justifyContent: "space-between" }}>
+          <span style={{ fontSize: "0.8rem", color: "#666" }}>Votos do candidato no município</span>
           <strong>{municipio.votes.toLocaleString("pt-BR")}</strong>
         </div>
 
@@ -104,140 +80,80 @@ export default function PainelSecoes({
           type="button"
           onClick={onFechar}
           aria-label="Fechar painel"
+          style={{ position: "absolute", top: "1rem", right: "1rem", background: "transparent", border: "none", fontSize: "1.2rem", cursor: "pointer", color: "#999" }}
         >
           ×
         </button>
       </header>
 
-      {secaoSelecionada && (
-        <div className="mapa-painel-detalhe">
-          <div className="mapa-painel-detalhe-principal">
-            <span>SEÇÃO SELECIONADA</span>
-
-            <h3>
-              Zona {secaoSelecionada.zone} · Seção {secaoSelecionada.section}
-            </h3>
-
-            <strong>
-              {secaoSelecionada.votes.toLocaleString("pt-BR")} votos
-            </strong>
-
-            <p>
-              {secaoSelecionada.pollingPlaceName ?? "Local não identificado"}
-            </p>
-
-            <small>
-              {secaoSelecionada.pollingPlaceAddress ?? "Endereço não informado"}
-            </small>
-          </div>
-
-          <div className="mapa-painel-detalhe-resumo">
-            <div>
-              <span>Local de votação</span>
-              <strong>
-                {secaoSelecionada.pollingPlaceNumber ?? "—"}
-              </strong>
-            </div>
-
-            <div>
-              <span>Seções neste local</span>
-              <strong>
-                {secoesNoMesmoLocal > 0
-                  ? secoesNoMesmoLocal
-                  : "Não identificado"}
-              </strong>
+      {/* CONTEÚDO COM ROLAGEM INTERNA */}
+      <div style={{ flex: 1, overflowY: "auto", padding: "1rem" }}>
+        {secaoSelecionada && (
+          <div className="mapa-painel-detalhe" style={{ marginBottom: "1rem", background: "#fce7f3", padding: "1rem", borderRadius: "8px" }}>
+            <div className="mapa-painel-detalhe-principal">
+              <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#C92071", textTransform: "uppercase" }}>SEÇÃO SELECIONADA</span>
+              <h3 style={{ margin: "0.25rem 0", fontSize: "1rem" }}>Zona {secaoSelecionada.zone} · Seção {secaoSelecionada.section}</h3>
+              <strong style={{ fontSize: "1.2rem", color: "#C92071" }}>{secaoSelecionada.votes.toLocaleString("pt-BR")} votos</strong>
+              <p style={{ margin: "0.5rem 0 0 0", fontSize: "0.85rem", color: "#333" }}>{secaoSelecionada.pollingPlaceName ?? "Local não identificado"}</p>
+              <small style={{ fontSize: "0.75rem", color: "#666" }}>{secaoSelecionada.pollingPlaceAddress ?? "Endereço não informado"}</small>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <nav className="mapa-painel-abas" role="tablist" aria-label="Conteúdo do painel">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={abaAtiva === "votacao"}
-          className={abaAtiva === "votacao" ? "ativo" : ""}
-          onClick={() => setAbaAtiva("votacao")}
-        >
-          Votação
-        </button>
+        <nav className="mapa-painel-abas" style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+          <button
+            type="button"
+            onClick={() => setAbaAtiva("votacao")}
+            style={{ flex: 1, padding: "0.5rem", borderRadius: "6px", border: "1px solid #ddd", background: abaAtiva === "votacao" ? "#C92071" : "#fff", color: abaAtiva === "votacao" ? "#fff" : "#666", cursor: "pointer", fontWeight: 500 }}
+          >
+            Votação
+          </button>
+          <button
+            type="button"
+            onClick={() => setAbaAtiva("secoes")}
+            style={{ flex: 1, padding: "0.5rem", borderRadius: "6px", border: "1px solid #ddd", background: abaAtiva === "secoes" ? "#C92071" : "#fff", color: abaAtiva === "secoes" ? "#fff" : "#666", cursor: "pointer", fontWeight: 500 }}
+          >
+            Seções ({secoes.length})
+          </button>
+        </nav>
 
-        <button
-          type="button"
-          role="tab"
-          aria-selected={abaAtiva === "secoes"}
-          className={abaAtiva === "secoes" ? "ativo" : ""}
-          onClick={() => setAbaAtiva("secoes")}
-        >
-          Seções ({secoes.length})
-        </button>
-      </nav>
-
-      <div className="mapa-painel-conteudo">
         {abaAtiva === "votacao" ? (
-          <div role="tabpanel">
-            <ResultadoSecao
-              votosSecao={votosSecao}
-              carregando={carregandoVotos}
-              erro={erroVotos}
-            />
-          </div>
+          <ResultadoSecao votosSecao={votosSecao} carregando={carregandoVotos} erro={erroVotos} />
         ) : (
-          <div className="mapa-painel-secoes-conteudo" role="tabpanel">
-            <div className="mapa-painel-busca">
-              <input
-                type="search"
-                value={buscaSecao}
-                placeholder="Pesquisar zona ou seção..."
-                aria-label="Pesquisar zona ou seção"
-                onChange={(event) => {
-                  setBuscaSecao(event.target.value);
-                  setMostrarTodas(false);
-                }}
-              />
-            </div>
-
-            <div className="mapa-painel-colunas">
-              <span>Zona</span>
-              <span>Seção</span>
-              <span>Votos</span>
-            </div>
-
+          <div>
+            <input
+              type="search"
+              value={buscaSecao}
+              placeholder="Pesquisar zona ou seção..."
+              style={{ width: "100%", padding: "0.5rem", borderRadius: "6px", border: "1px solid #ddd", marginBottom: "1rem" }}
+              onChange={(event) => {
+                setBuscaSecao(event.target.value);
+                setMostrarTodas(false);
+              }}
+            />
+            
             {secoesExibidas.map((secao) => {
-              const selecionada =
-                secaoSelecionada?.zone === secao.zone &&
-                secaoSelecionada?.section === secao.section;
-
+              const selecionada = secaoSelecionada?.zone === secao.zone && secaoSelecionada?.section === secao.section;
               return (
                 <button
                   type="button"
                   key={`${secao.zone}-${secao.section}`}
-                  className={`mapa-painel-linha ${selecionada ? "selecionada" : ""}`}
-                  onClick={() => selecionarSecao(secao)}
+                  onClick={(e) => { e.preventDefault(); selecionarSecao(secao); }}
+                  style={{ display: "flex", justifyContent: "space-between", width: "100%", padding: "0.75rem", marginBottom: "0.5rem", borderRadius: "6px", border: "1px solid", borderColor: selecionada ? "#C92071" : "#eee", background: selecionada ? "#fce7f3" : "#fff", cursor: "pointer" }}
                 >
-                  <span>{secao.zone}</span>
-                  <span>{secao.section}</span>
-                  <strong>{secao.votes.toLocaleString("pt-BR")}</strong>
+                  <span style={{ fontSize: "0.85rem" }}>Zona {secao.zone} · Seção {secao.section}</span>
+                  <strong style={{ fontSize: "0.85rem", color: "#C92071" }}>{secao.votes.toLocaleString("pt-BR")}</strong>
                 </button>
               );
             })}
 
-            {secoesFiltradas.length === 0 && (
-              <p className="mapa-painel-vazio">
-                Nenhuma seção encontrada.
-              </p>
-            )}
-
             {secoesFiltradas.length > 5 && (
               <button
                 type="button"
-                className="mapa-painel-ver-todas"
                 onClick={() => setMostrarTodas((atual) => !atual)}
-                aria-expanded={mostrarTodas}
+                style={{ width: "100%", padding: "0.5rem", background: "transparent", border: "1px dashed #ddd", borderRadius: "6px", cursor: "pointer", color: "#666", fontSize: "0.8rem" }}
               >
-                {mostrarTodas
-                  ? "Mostrar apenas 5 seções"
-                  : `Ver todas as ${secoesFiltradas.length} seções`}
+                {mostrarTodas ? "Mostrar menos" : `Ver todas as ${secoesFiltradas.length} seções`}
               </button>
             )}
           </div>
