@@ -163,3 +163,239 @@
     overflow: visible;
   }
 }
+
+/* ==========================================
+   MAPA ELEITORAL — RESPONSIVIDADE MOBILE
+========================================== */
+
+.mobile-menu-toggle,
+.mobile-menu-backdrop {
+  display: none;
+}
+
+@media (max-width: 1050px) {
+
+  /* Layout ocupa toda a largura */
+  .main-layout--mapa {
+    display: block;
+    position: relative;
+    width: 100%;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    background: var(--color-background);
+  }
+
+  /* Sidebar transforma-se em menu retrátil */
+  .main-layout--mapa #sidebar-principal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1100;
+
+    width: 250px;
+    max-width: 85vw;
+    height: 100dvh;
+
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .main-layout--mapa.main-layout--menu-open
+    #sidebar-principal {
+    transform: translateX(0);
+  }
+
+  /* Sidebar ocupa toda a área do menu */
+  .main-layout--mapa #sidebar-principal .sidebar {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    flex: none;
+    overflow-y: auto;
+  }
+
+  /* Conteúdo principal utiliza a largura completa */
+  .main-layout--mapa .main-content--mapa {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 100dvh;
+
+    margin: 0;
+    padding: 58px 12px 16px;
+
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  /* Botão de abertura do menu */
+  .main-layout--mapa .mobile-menu-toggle {
+    display: flex;
+    position: fixed;
+    top: 10px;
+    left: 12px;
+    z-index: 1200;
+
+    width: 40px;
+    height: 40px;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+
+    background: #172033;
+    color: #fff;
+
+    font-size: 22px;
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  
+/* ==========================================
+   NAVEGAÇÃO MOBILE — TODAS AS PÁGINAS
+========================================== */
+
+.mobile-menu-toggle,
+.mobile-menu-backdrop {
+  display: none;
+}
+
+/* Desktop: sidebar fixa */
+@media (min-width: 1051px) {
+  .main-layout #sidebar-principal {
+    flex: 0 0 250px;
+    width: 250px;
+    min-width: 0;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .main-layout #sidebar-principal .sidebar {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Mobile e tablets */
+@media (max-width: 1050px) {
+  .main-layout {
+    display: block;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  /* Sidebar retrátil */
+  .main-layout #sidebar-principal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1100;
+
+    width: 250px;
+    max-width: 85vw;
+    height: 100vh;
+    height: 100dvh;
+
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .main-layout.main-layout--menu-open
+    #sidebar-principal {
+    transform: translateX(0);
+  }
+
+  .main-layout #sidebar-principal .sidebar {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    overflow-y: auto;
+  }
+
+  /* Conteúdo de todas as páginas */
+  .main-layout .main-content {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    margin: 0;
+    padding: 58px 12px 16px;
+
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  /* Botão do menu */
+  .mobile-menu-toggle {
+    display: flex;
+    position: fixed;
+    top: 10px;
+    left: 12px;
+    z-index: 1200;
+
+    width: 40px;
+    height: 40px;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+
+    background: #172033;
+    color: #fff;
+
+    font-size: 22px;
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Fundo ao abrir a navegação */
+  .mobile-menu-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1090;
+
+    width: 100%;
+    height: 100%;
+
+    border: none;
+    background: rgba(15, 23, 42, 0.48);
+    cursor: pointer;
+  }
+}
+
+/* Celulares pequenos */
+@media (max-width: 480px) {
+  .main-layout .main-content {
+    padding: 58px 10px 12px;
+  }
+}
+
+}

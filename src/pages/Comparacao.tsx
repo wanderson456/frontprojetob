@@ -236,8 +236,10 @@ export default function Comparacao() {
 
           <div className="comparacao-conteudo">
             {abaAtiva === "votos" && (
-              <>
-                <section className="comparacao-resultados">
+              <div className="comparacao-votos-grid">
+                
+                {/* Área que junta os cards e a diferença */}
+                <div className="comparacao-cards-area">
                   <article className="comparacao-candidato comparacao-candidato-a">
                     <div className="comparacao-candidato-topo"><span>CANDIDATO A</span><span>{candidatoA?.partyAbbreviation || "-"}</span></div>
                     <h3>{candidatoA?.candidateName || "Selecione o candidato A"}</h3>
@@ -247,6 +249,7 @@ export default function Comparacao() {
                       <div><span>Percentual</span><strong>{formatarPercentual(candidatoA?.percentage || 0)}</strong></div>
                     </div>
                   </article>
+
                   <article className="comparacao-candidato comparacao-candidato-b">
                     <div className="comparacao-candidato-topo"><span>CANDIDATO B</span><span>{candidatoB?.partyAbbreviation || "-"}</span></div>
                     <h3>{candidatoB?.candidateName || "Selecione o candidato B"}</h3>
@@ -256,14 +259,19 @@ export default function Comparacao() {
                       <div><span>Percentual</span><strong>{formatarPercentual(candidatoB?.percentage || 0)}</strong></div>
                     </div>
                   </article>
-                </section>
-                <section className="comparacao-diferenca">
-                  <div><span>Diferença de votos</span><strong>{formatarNumero(diferencaVotos)}</strong></div>
-                  <div><span>Diferença percentual</span><strong>{formatarPercentual(diferencaPercentual)}</strong></div>
-                  <p>{diferencaVotos === 0 ? "Os candidatos terminaram empatados em votos." : (candidatoA?.votes || 0) > (candidatoB?.votes || 0) ? `${candidatoA?.candidateName} ficou à frente na votação.` : `${candidatoB?.candidateName} ficou à frente na votação.`}</p>
-                </section>
+
+                  <div className="comparacao-diferenca">
+                    <div><span>Diferença de votos</span><strong>{formatarNumero(diferencaVotos)}</strong></div>
+                    <div><span>Diferença percentual</span><strong>{formatarPercentual(diferencaPercentual)}</strong></div>
+                    <p>{diferencaVotos === 0 ? "Os candidatos terminaram empatados em votos." : (candidatoA?.votes || 0) > (candidatoB?.votes || 0) ? `${candidatoA?.candidateName} ficou à frente na votação.` : `${candidatoB?.candidateName} ficou à frente na votação.`}</p>
+                  </div>
+                </div>
+
                 <section className="comparacao-grafico">
-                  <div className="comparacao-grafico-header"><h2>Desempenho comparativo</h2><p>Quantidade de votos por candidato</p></div>
+                  <div className="comparacao-grafico-header">
+                    <h2>Desempenho comparativo</h2>
+                    <p>Quantidade de votos por candidato</p>
+                  </div>
                   <div className="comparacao-grafico-visual">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={dadosGrafico} layout="vertical" margin={{ top: 10, right: 25, left: 20, bottom: 10 }}>
@@ -278,7 +286,7 @@ export default function Comparacao() {
                     </ResponsiveContainer>
                   </div>
                 </section>
-              </>
+              </div>
             )}
 
             {abaAtiva === "geografica" && (
@@ -304,7 +312,8 @@ export default function Comparacao() {
                       minHeight: 0,
                       overflow: "hidden"
                     }}
-                  ><div className="mapa-container" style={{ height: "100%", minHeight: "500px", width: "100%", borderRadius: "12px", overflow: "hidden", border: "1px solid #e2e8f0", background: "#fff" }}>
+                  >
+                    <div className="mapa-container" style={{ height: "100%", minHeight: "400px", width: "100%", borderRadius: "12px", overflow: "hidden", border: "1px solid #e2e8f0", background: "#fff" }}>
                       <MapaLeaflet
                         key={`mapa-${candidatoAId}-${candidatoBId}`}
                         candidatoId={candidatoAId}

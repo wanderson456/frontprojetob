@@ -1,29 +1,27 @@
-
 /* ==========================================
-   LAYOUT GERAL — TELA CHEIA SEM SCROLL EXTERNO
+   LAYOUT GERAL — TELA CHEIA SEM SCROLL
 ========================================== */
-
 .comparacao {
-  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-
   width: 100%;
-  min-width: 0;
-  min-height: 0;
-
-  padding: 1.5rem;
+  
+  /* A MÁGICA ACONTECE AQUI:
+     Removemos o 100vh e usamos 100% com flex: 1.
+     Assim ele se adapta ao container pai sem estourar. */
+  height: 100%; 
+  min-height: 0; 
+  
+  padding: 1rem 1.5rem;
   box-sizing: border-box;
-
-  overflow: hidden;
+  overflow: hidden; /* Trava rolagem dentro da página de comparação */
   background-color: #f4f6f8;
+  position: relative; 
 }
 
-/* Cabeçalho não encolhe */
 .comparacao-header {
   flex: 0 0 auto;
-  min-width: 0;
 }
 
 .comparacao-etiqueta {
@@ -47,33 +45,18 @@
 }
 
 /* ==========================================
-   RESPONSIVIDADE
+   FILTROS
 ========================================== */
-
-@media (max-width: 768px) {
-  .comparacao {
-    padding: 1rem;
-    overflow-y: auto;
-  }
-
-  .comparacao-header h1 {
-    font-size: 1.3rem;
-  }
-}
-
-
-/* ==========================================
-   FILTROS (COMPACTOS)
-   ========================================== */
 .comparacao-filtros {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.75rem;
   background: #fff;
-  padding: 0.75rem;
+  padding: 0.6rem 0.75rem;
   border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
+  flex-shrink: 0;
 }
 
 .comparacao-campo label {
@@ -97,21 +80,22 @@
 }
 
 /* ==========================================
-   SELEÇÃO DE CANDIDATOS (COMPACTA)
-   ========================================== */
+   SELEÇÃO DE CANDIDATOS
+========================================== */
 .comparacao-selecao {
   background: #fff;
-  padding: 0.75rem;
+  padding: 0.6rem 0.75rem;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
 }
 
 .comparacao-selecao-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .comparacao-selecao-header h2 {
@@ -157,11 +141,12 @@
 
 /* ==========================================
    ABAS
-   ========================================== */
+========================================== */
 .comparacao-abas {
   display: flex;
   gap: 0.5rem;
   border-bottom: 1px solid #e2e8f0;
+  flex-shrink: 0;
 }
 
 .comparacao-abas button {
@@ -181,38 +166,45 @@
 }
 
 /* ==========================================
-   ÁREA DE CONTEÚDO (GRÁFICO OU MAPA)
-   ========================================== */
-/* Container que envolve os cards, diferença e gráfico */
+   ÁREA DE CONTEÚDO (GRÁFICO)
+========================================== */
 .comparacao-conteudo {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  min-height: 0; /* Importante para o flex funcionar */
-  height: 100%;
+  flex: 1; /* Ocupa o espaço restante */
+  min-height: 0; /* CRUCIAL: Permite que o flexbox diminua e não estoure a tela */
+  overflow: hidden; 
 }
 
-/* Cards dos Candidatos */
-.comparacao-resultados {
+.comparacao-votos-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.comparacao-cards-area {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Impede os cards de encolherem */
 }
 
 .comparacao-candidato {
   background: #fff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  padding: 0.75rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  padding: 0.6rem 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .comparacao-candidato-topo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.15rem;
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -240,8 +232,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
+  margin-top: 0.25rem;
+  padding-top: 0.25rem;
   border-top: 1px solid #f1f5f9;
 }
 
@@ -256,28 +248,27 @@
   color: #1a202c;
 }
 
-/* Diferença */
 .comparacao-diferenca {
+  grid-column: span 2;
   background: #f8fafc;
   border: 1px dashed #cbd5e1;
   border-radius: 12px;
-  padding: 0.75rem;
+  padding: 0.4rem 0.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
-  flex-shrink: 0;
 }
 
 .comparacao-diferenca div span {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: #64748b;
   display: block;
 }
 
 .comparacao-diferenca div strong {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #1a202c;
 }
 
@@ -288,21 +279,24 @@
   font-weight: 500;
   flex-basis: 100%;
   text-align: center;
-  padding-top: 0.5rem;
+  padding-top: 0.3rem;
   border-top: 1px solid #e2e8f0;
 }
 
-/* Gráfico */
+/* ==========================================
+   O GRÁFICO
+========================================== */
 .comparacao-grafico {
   background: #fff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 0.75rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  flex: 1; /* Ocupa todo o espaço restante */
-  min-height: 0; /* Impede de "empurrar" a tela */
+  
+  flex: 1; /* Ocupa o espaço vertical restante */
+  min-height: 0; /* Impede de estourar a tela */
 }
 
 .comparacao-grafico-header {
@@ -324,13 +318,14 @@
 
 .comparacao-grafico-visual {
   flex: 1; 
-  min-height: 0;
+  min-height: 0; 
   width: 100%;
+  position: relative; 
 }
 
 /* ==========================================
    ÁREA GEOGRÁFICA (MAPA)
-   ========================================== */
+========================================== */
 .comparacao-geografica {
   display: flex;
   flex-direction: column;
@@ -355,217 +350,18 @@
   color: #64748b;
 }
 
-/* Barra de rolagem invisível para o painel */
-.comparacao-painel-scroll::-webkit-scrollbar { display: none; }
-.comparacao-painel-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-
-
-.comparacao-geografica {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0; /* Importante */
-}
-
-/* Container que envolve o mapa e o painel */
-.comparacao-geografica > div:last-child {
-  flex: 1;
-  min-height: 500px; /* Garante que o mapa tenha altura */
-  display: grid;
-  grid-template-columns: 1fr 400px; /* Se o painel estiver aberto */
-  gap: 1rem;
-}
-
-
 /* ==========================================
-   ACOMPANHAMENTO ELEITORAL — REFINAMENTO VISUAL
-   Escopo exclusivo da página Mapa Eleitoral
+   RESPONSIVIDADE
 ========================================== */
-
-@media (min-width: 1051px) {
-  .mapa-layout.com-painel {
-    grid-template-columns: minmax(0, 1fr) minmax(460px, 520px);
-    gap: 12px;
-    align-items: stretch;
+@media (max-width: 768px) {
+  .comparacao {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto; /* Permite rolar no celular */
   }
-
-  .mapa-layout.com-painel > .mapa-painel-secoes {
-    position: relative !important;
-    inset: auto !important;
-    width: 100% !important;
-    max-width: none !important;
-    height: 100% !important;
-    min-height: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
-    box-sizing: border-box;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 12px !important;
-    background: #fff !important;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08) !important;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-header {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: flex-start !important;
-    flex-shrink: 0 !important;
-    gap: 12px !important;
-    padding: 12px 16px !important;
-    background: #fff !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-header-info {
-    min-width: 0;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-header-info > span {
-    font-size: 10px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.7px !important;
-    color: #64748b !important;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-header h2 {
-    margin: 4px 0 !important;
-    font-size: 16px !important;
-    font-weight: 700;
-    color: #172033 !important;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-header p {
-    margin: 0 !important;
-    font-size: 12px !important;
-    color: #64748b !important;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-header button {
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    font-size: 20px !important;
-    color: #94a3b8 !important;
-    background: transparent !important;
-  }
-
-  /* Conteúdo com rolagem independente */
-  .mapa-layout.com-painel .mapa-painel-secoes > div {
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    overflow-y: auto !important;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-    scrollbar-color: #cbd5e1 transparent;
-    padding: 14px !important;
-    box-sizing: border-box;
-  }
-
-  /* Cartão da seção selecionada */
-  .mapa-layout.com-painel .mapa-painel-detalhe {
-    margin-bottom: 14px !important;
-    padding: 14px !important;
-    border-radius: 9px !important;
-    background: #fce7f3 !important;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-detalhe-principal > span {
-    display: block;
-    font-size: 10px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.6px;
-    color: #c92071 !important;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-detalhe h3 {
-    margin: 4px 0 !important;
-    font-size: 14px !important;
-    color: #172033;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-detalhe strong {
-    font-size: 19px !important;
-    color: #c92071 !important;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-detalhe p {
-    margin: 7px 0 3px !important;
-    font-size: 12px !important;
-    line-height: 1.4;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-detalhe small {
-    font-size: 11px !important;
-    color: #64748b;
-  }
-
-  /* Abas de navegação */
-  .mapa-layout.com-painel .mapa-painel-abas {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 8px !important;
-    margin-bottom: 14px !important;
-    padding: 0 0 12px !important;
-    border-bottom: 1px solid #e2e8f0;
-    background: transparent !important;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-abas button {
-    width: 100%;
-    min-height: 36px;
-    padding: 8px 12px !important;
-    border-radius: 7px !important;
-    font-size: 12px !important;
-    font-weight: 600;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
-  }
-
-  /* Resultados */
-  .mapa-layout.com-painel .mapa-painel-resultados {
-    padding: 10px !important;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-resultados > h3 {
-    margin: 0 0 12px !important;
-    font-size: 14px !important;
-    color: #172033;
-  }
-}
-
-/* Telas menores */
-@media (max-width: 1050px) {
-  .mapa-layout.com-painel > .mapa-painel-secoes {
-    width: 100% !important;
-    max-width: none !important;
-    min-width: 0 !important;
-    box-sizing: border-box;
-  }
-}
-
-@media (max-width: 600px) {
-  .mapa-layout.com-painel .mapa-painel-secoes > div {
-    padding: 12px !important;
-  }
-
-  .mapa-layout.com-painel .mapa-painel-detalhe {
-    padding: 12px !important;
-  }
-}
-
-.mapa-painel-secoes .mapa-cargos-tabs {
-  display: flex !important;
-  flex-wrap: nowrap !important;
-  gap: 4px !important;
-  width: 100%;
-  padding: 3px 0 9px;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
-.mapa-painel-secoes .mapa-cargos-tabs button {
-  flex: 0 0 auto;
-  padding: 6px 8px;
-  font-size: 10px;
-  white-space: nowrap;
+  .comparacao-filtros { grid-template-columns: 1fr 1fr; }
+  .comparacao-candidatos { grid-template-columns: 1fr; }
+  .comparacao-divisor { margin: 0 auto; }
+  .comparacao-cards-area { grid-template-columns: 1fr; }
+  .comparacao-diferenca { grid-column: span 1; }
 }
