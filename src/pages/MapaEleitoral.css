@@ -1,1377 +1,2924 @@
 .mapa-eleitoral {
+
   width: 100%;
+
   display: flex;
+
   flex-direction: column;
+
   gap: 24px;
+
 }
+
+
 
 .mapa-header {
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   gap: 20px;
+
 }
+
+
 
 .mapa-subtitulo {
+
   color: #991956;
+
   font-size: 12px;
+
   font-weight: 700;
+
   letter-spacing: 1px;
+
 }
+
+
 
 .mapa-header h1 {
+
   margin: 8px 0;
+
   font-size: 28px;
+
   color: #1a202c;
+
 }
+
+
 
 .mapa-header p {
+
   margin: 0;
+
   color: #718096;
+
 }
+
+
 
 .mapa-periodo {
+
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   background: white;
+
   padding: 14px 24px;
+
   border-radius: 12px;
+
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
 }
+
+
 
 .mapa-periodo strong {
+
   font-size: 22px;
+
   color: #c92071;
+
 }
+
+
 
 .mapa-periodo span {
+
   font-size: 12px;
+
   color: #718096;
+
 }
+
+
 
 .mapa-indicadores {
+
   display: grid;
+
   grid-template-columns: repeat(3, minmax(0, 1fr));
+
   gap: 16px;
+
 }
+
+
 
 .mapa-card {
+
   background: white;
+
   padding: 22px;
+
   border-radius: 12px;
+
   display: flex;
+
   flex-direction: column;
+
   gap: 12px;
+
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
 }
+
+
 
 .mapa-card span {
+
   font-size: 13px;
+
   color: #718096;
+
 }
+
+
 
 .mapa-card strong {
+
   font-size: 25px;
+
   color: #1a202c;
+
 }
+
+
 
 .mapa-container {
+
   position: relative;
 
+
+
   width: 100%;
+
   height: 600px;
+
   overflow: hidden;
+
   border-radius: 14px;
+
   border: 1px solid #e2e8f0;
+
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+
 }
+
+
 
 .mapa-leaflet {
+
   width: 100%;
+
   height: 100%;
+
   z-index: 1;
+
 }
+
+
 
 @media (min-width: 1051px) {
+
   .mapa-layout .mapa-leaflet {
+
     height: 100%;
+
     width: 100%;
+
   }
+
 }
 
+
+
 .mapa-legenda {
+
   display: flex;
+
   align-items: center;
+
   gap: 10px;
+
   color: #718096;
+
   font-size: 13px;
+
 }
+
+
 
 .legenda-circulo {
+
   width: 13px;
+
   height: 13px;
+
   border-radius: 50%;
+
   background: #c92071;
+
   border: 1px solid #991956;
+
 }
+
+
 
 .mapa-popup {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 7px;
+
   min-width: 150px;
+
 }
+
+
 
 .mapa-popup strong {
+
   color: #991956;
+
   font-size: 14px;
+
 }
+
+
 
 .mapa-popup span {
+
   font-size: 13px;
+
 }
+
+
 
 .mapa-popup small {
+
   color: #718096;
+
 }
+
+
 
 .mapa-mensagem,
-.mapa-erro {
-  padding: 24px;
-  border-radius: 10px;
-  background: white;
-  color: #718096;
-}
 
 .mapa-erro {
-  color: #c53030;
+
+  padding: 24px;
+
+  border-radius: 10px;
+
+  background: white;
+
+  color: #718096;
+
 }
+
+
+
+.mapa-erro {
+
+  color: #c53030;
+
+}
+
+
 
 .mapa-rodape {
+
   margin: 0;
+
   color: #718096;
+
   font-size: 12px;
+
 }
+
+
 
 @media (max-width: 768px) {
+
   .mapa-header {
+
     align-items: flex-start;
+
   }
+
+
 
   .mapa-header h1 {
+
     font-size: 23px;
+
   }
+
+
 
   .mapa-indicadores {
+
     grid-template-columns: 1fr;
+
   }
+
+
 
   .mapa-container {
+
     height: 450px;
+
   }
+
 }
+
+
 
 .mapa-controles {
+
   display: flex;
+
   align-items: center;
+
   flex-wrap: wrap;
+
   gap: 10px;
+
 }
+
+
 
 .mapa-controles>span {
+
   color: #718096;
+
   font-size: 13px;
+
   font-weight: 600;
+
 }
+
+
 
 .mapa-controles button {
+
   padding: 9px 15px;
+
   border: 1px solid #e2e8f0;
+
   border-radius: 8px;
+
   background: white;
+
   color: #4a5568;
+
   cursor: pointer;
+
   transition: 0.2s;
+
 }
+
+
 
 .mapa-controles button:hover {
+
   border-color: #c92071;
+
   color: #c92071;
+
 }
+
+
 
 .mapa-controles button.ativo {
+
   background: #c92071;
+
   border-color: #c92071;
+
   color: white;
+
 }
+
+
 
 .mapa-legenda {
+
   flex-wrap: wrap;
+
 }
+
+
 
 .legenda-cor {
+
   display: inline-block;
+
   width: 25px;
+
   height: 13px;
+
   border-radius: 3px;
+
 }
+
+
 
 /* Filtros do mapa eleitoral */
+
 .mapa-filtros {
+
   display: grid;
+
   grid-template-columns: minmax(160px, 0.8fr) minmax(220px, 1.5fr) minmax(250px, 1.7fr);
+
   gap: 16px;
+
   padding: 20px;
+
   background: white;
+
   border: 1px solid #e2e8f0;
+
   border-radius: 12px;
+
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
 }
+
+
 
 .mapa-filtro {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 8px;
+
   min-width: 0;
+
 }
+
+
 
 .mapa-filtro label {
+
   color: #4a5568;
+
   font-size: 13px;
+
   font-weight: 600;
+
 }
+
+
 
 .mapa-filtro input,
+
 .mapa-filtro select {
+
   width: 100%;
+
   min-width: 0;
+
   height: 42px;
+
   padding: 0 12px;
+
   border: 1px solid #e2e8f0;
+
   border-radius: 8px;
+
   background: #fff;
+
   color: #1a202c;
+
   outline: none;
+
   transition: border-color 0.2s, box-shadow 0.2s;
+
 }
+
+
 
 .mapa-filtro input:focus,
+
 .mapa-filtro select:focus {
+
   border-color: #c92071;
+
   box-shadow: 0 0 0 3px rgba(201, 32, 113, 0.1);
+
 }
+
+
 
 .mapa-filtro select:disabled {
+
   background: #f7fafc;
+
   color: #a0aec0;
+
   cursor: not-allowed;
+
 }
+
+
 
 .mapa-candidato-selecionado {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 6px;
+
   padding: 16px 20px;
+
   border-left: 4px solid #c92071;
+
   border-radius: 8px;
+
   background: white;
+
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
 }
+
+
 
 .mapa-candidato-selecionado strong {
+
   color: #1a202c;
+
   font-size: 15px;
+
 }
+
+
 
 .mapa-candidato-selecionado span {
+
   color: #718096;
+
   font-size: 13px;
+
 }
+
+
 
 @media (max-width: 900px) {
+
   .mapa-filtros {
+
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
   }
 
+
+
   .mapa-filtro:last-child {
+
     grid-column: 1 / -1;
+
   }
+
 }
+
+
 
 @media (max-width: 600px) {
+
   .mapa-filtros {
+
     grid-template-columns: 1fr;
+
     padding: 16px;
+
   }
 
+
+
   .mapa-filtro:last-child {
+
     grid-column: auto;
+
   }
+
 }
+
+
 
 .mapa-paginacao {
+
   grid-column: 1 / -1;
+
   display: flex;
+
   align-items: center;
+
   justify-content: flex-end;
+
   gap: 12px;
+
   padding-top: 12px;
+
   border-top: 1px solid #e2e8f0;
+
 }
+
+
 
 .mapa-paginacao span {
+
   color: #4a5568;
+
   font-size: 13px;
+
   font-weight: 600;
+
 }
+
+
 
 .mapa-paginacao button {
+
   padding: 9px 16px;
+
   border: 1px solid #e2e8f0;
+
   border-radius: 8px;
+
   background: white;
+
   color: #4a5568;
+
   cursor: pointer;
+
   transition: 0.2s;
+
 }
+
+
 
 .mapa-paginacao button:hover:not(:disabled) {
+
   border-color: #c92071;
+
   color: #c92071;
+
 }
+
+
 
 .mapa-paginacao button:disabled {
+
   opacity: 0.45;
+
   cursor: not-allowed;
+
 }
+
+
 
 /* Marcadores agrupados por local de votação */
+
 .mapa-popup-local {
+
   min-width: 210px;
+
   max-width: 280px;
+
 }
+
+
 
 /* Botões das seções nos popups do mapa */
+
 .mapa-popup-secao {
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   gap: 12px;
+
   width: 100%;
+
   padding: 10px 12px;
+
   border: 1px solid #e2e8f0;
+
   border-radius: 7px;
+
   background: #ffffff;
+
   color: #334155;
+
   text-align: left;
+
   cursor: pointer;
+
   transition: background 0.2s, border-color 0.2s;
+
 }
+
+
 
 .mapa-popup-secao:hover {
+
   background: #fdf0f6;
+
   border-color: #c92071;
+
 }
+
+
 
 .mapa-popup-secao strong {
+
   color: #991956;
+
   font-size: 12px;
+
   line-height: 1.4;
+
 }
+
+
 
 .mapa-popup-secao span {
+
   flex-shrink: 0;
+
   white-space: nowrap;
+
   color: #475569;
+
   font-size: 12px;
+
   font-weight: 600;
+
 }
+
+
 
 .mapa-popup-secoes {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 8px;
+
   max-height: 190px;
+
   overflow-y: auto;
+
   padding: 10px 2px 2px;
+
   border-top: 1px solid #e2e8f0;
+
 }
+
+
 
 .mapa-painel-secoes {
+
   position: absolute;
+
   z-index: 1000;
+
   top: 12px;
+
   right: 12px;
+
   bottom: 12px;
+
   width: 520px;
+
   max-width: calc(100% - 24px);
+
   display: flex;
+
   flex-direction: column;
+
   background: #ffffff;
+
   border-radius: 12px;
+
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
   overflow: hidden;
+
 }
+
+
 
 .mapa-painel-header,
+
 .mapa-painel-detalhe {
+
   flex-shrink: 0;
+
 }
 
+
+
 .mapa-painel-conteudo {
+
   flex: 1;
+
   min-height: 0;
+
   overflow-y: auto;
+
   overscroll-behavior: contain;
+
   scrollbar-width: thin;
+
 }
+
+
 
 .mapa-painel-header-info>span {
+
   color: var(--color-primary-dark);
+
   font-size: 10px;
+
   font-weight: 700;
+
   letter-spacing: 0.7px;
+
 }
+
+
 
 .mapa-painel-header button {
+
   border: none;
+
   border-radius: 6px;
+
   cursor: pointer;
+
 }
+
+
 
 .mapa-painel-colunas,
+
 .mapa-painel-linha {
+
   display: grid;
+
   grid-template-columns: 1fr 1fr 1fr;
+
   align-items: center;
+
   text-align: center;
+
 }
+
+
 
 .mapa-painel-colunas {
+
   position: sticky;
+
   top: -10px;
+
   padding: 10px 4px;
+
   background: #ffffff;
+
   color: #718096;
+
   font-size: 11px;
+
   font-weight: 700;
+
 }
+
+
 
 .mapa-painel-linha {
+
   width: 100%;
+
   padding: 11px 4px;
+
   border: none;
+
   border-bottom: 1px solid #edf0f4;
+
   background: #ffffff;
+
   color: #4a5568;
+
   font-size: 12px;
+
   cursor: pointer;
+
 }
+
+
 
 .mapa-painel-linha:hover {
+
   background: #fdf0f6;
+
 }
+
+
 
 .mapa-painel-linha.selecionada {
+
   background: #fce7f0;
+
   color: #991956;
+
 }
+
+
 
 .mapa-painel-linha strong {
+
   color: #991956;
+
 }
 
+
+
 @media (max-width: 600px) {
+
   .mapa-painel-secoes {
+
     width: calc(100% - 24px);
+
   }
+
 }
+
+
 
 /* Resultados eleitorais por cargo */
+
 .mapa-painel-resultados {
+
   padding: 14px;
+
   min-height: 0;
+
   border-bottom: 1px solid var(--color-border);
+
 }
+
+
 
 .mapa-painel-resultados>h3 {
+
   margin: 0 0 10px;
+
   font-size: 16px;
+
   color: var(--color-text-primary);
+
 }
+
+
 
 .mapa-cargo-resultado {
+
   padding: 10px;
+
   margin-bottom: 8px;
+
   border: 1px solid var(--color-border);
+
   border-radius: 9px;
+
   background: var(--color-surface);
+
 }
 
+
+
 .mapa-candidato-votos {
+
   margin-bottom: 9px;
+
 }
+
+
 
 .mapa-cargo-resultado header {
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   gap: 8px;
+
   margin-bottom: 12px;
+
 }
+
+
 
 .mapa-cargo-resultado header h4 {
+
   margin: 0;
+
   font-size: 14px;
+
   color: #991956;
+
 }
+
+
 
 .mapa-cargo-resultado header span {
+
   color: #64748b;
+
   font-size: 11px;
+
 }
+
+
 
 .mapa-candidato-votos {
+
   margin-bottom: 12px;
+
 }
+
+
 
 .mapa-candidato-votos-info {
+
   display: grid;
+
   grid-template-columns: 25px minmax(0, 1fr) auto;
+
   align-items: center;
+
   gap: 8px;
+
 }
+
+
 
 .mapa-posicao {
+
   color: #991956;
+
   font-weight: 700;
+
   font-size: 12px;
+
 }
+
+
 
 .mapa-candidato-votos-info>div {
+
   min-width: 0;
+
 }
+
+
 
 .mapa-candidato-votos-info>div strong {
+
   display: block;
+
   font-size: 12px;
+
   overflow-wrap: anywhere;
+
   color: #334155;
+
 }
+
+
 
 .mapa-candidato-votos-info small {
+
   display: block;
+
   margin-top: 3px;
+
   color: #64748b;
+
   font-size: 11px;
+
 }
+
+
 
 .mapa-quantidade-votos {
+
   color: #991956;
+
   font-size: 14px;
+
   font-variant-numeric: tabular-nums;
+
 }
+
+
 
 .mapa-barra-fundo {
+
   height: 6px;
+
   margin: 7px 0 0 33px;
+
   overflow: hidden;
+
   border-radius: 10px;
+
   background: #f1e5eb;
+
 }
+
+
 
 .mapa-barra-preenchimento {
+
   height: 100%;
+
   border-radius: 10px;
+
   background: #C92071;
+
 }
+
+
 
 .mapa-votos-adicionais {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 7px;
+
   padding-top: 10px;
+
   margin-top: 10px;
+
   border-top: 1px solid #edf0f4;
+
   font-size: 12px;
+
 }
+
+
 
 .mapa-votos-adicionais>strong {
+
   color: #475569;
+
 }
+
+
 
 .mapa-votos-adicionais>div {
+
   display: flex;
+
   justify-content: space-between;
+
   gap: 10px;
+
 }
+
+
 
 .mapa-votos-adicionais>div span {
+
   color: #64748b;
+
 }
+
+
 
 .mapa-votos-adicionais>div strong {
+
   color: #991956;
+
 }
+
+
 
 @media (max-width: 600px) {
+
   .mapa-painel-secoes {
+
     width: calc(100% - 24px);
+
   }
 
+
+
 }
+
+
 
 /* Layout principal: mapa e painel lateral */
+
 .mapa-layout {
+
   display: grid;
+
   grid-template-columns: minmax(0, 1fr);
+
   gap: 16px;
+
   width: 100%;
+
   align-items: stretch;
+
 }
+
+
 
 .mapa-layout.com-painel {
+
   grid-template-columns: minmax(0, 1fr) minmax(460px, 500px);
+
 }
+
+
 
 /* Área do mapa */
+
 .mapa-layout .mapa-container {
+
   width: 100%;
+
   min-width: 0;
+
   height: 600px;
+
   position: relative;
+
 }
+
+
 
 /* Painel lateral, agora sem sobrepor o mapa */
+
 .mapa-layout .mapa-painel-secoes {
+
   position: relative;
+
   inset: auto;
+
   width: 100%;
+
   max-width: none;
+
   height: 600px;
+
   min-width: 0;
+
   overflow: hidden;
+
   border: 1px solid #e2e8f0;
+
   border-radius: 12px;
+
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
 }
+
+
 
 @media (max-width: 1050px) {
+
   .mapa-layout.com-painel {
+
     grid-template-columns: minmax(0, 1fr);
+
   }
+
 }
 
+
+
 @media (max-width: 600px) {
+
   .mapa-layout {
+
     gap: 12px;
+
   }
+
 }
+
+
 
 /* Aumenta a área vertical do mapa e do painel */
+
 @media (min-width: 1051px) {
+
+
 
   .mapa-layout .mapa-container,
+
   .mapa-layout .mapa-painel-secoes {
+
     height: 720px;
+
   }
+
 }
+
+
 
 /* Tablets e notebooks menores */
+
 @media (max-width: 1050px) and (min-width: 601px) {
+
   .mapa-layout .mapa-container {
+
     height: 480px;
+
   }
 
+
+
   .mapa-layout .mapa-painel-secoes {
+
     height: 680px;
+
   }
+
 }
+
+
 
 /* Celulares */
+
 @media (max-width: 600px) {
+
   .mapa-layout .mapa-container {
+
     height: 400px;
+
   }
+
+
 
   .mapa-layout .mapa-painel-secoes {
+
     height: 700px;
+
   }
+
 }
+
+
 
 /* Abas de seleção dos cargos */
+
 .mapa-cargos-tabs {
+
   display: flex;
+
   align-items: center;
+
   gap: 7px;
+
   width: 100%;
+
   margin: 0 0 14px;
+
   padding: 3px 2px 9px;
+
   overflow-x: auto;
+
   scrollbar-width: thin;
+
   scrollbar-color: #cbd5e1 transparent;
+
 }
+
+
 
 .mapa-cargos-tabs button {
+
   flex: 0 0 auto;
+
   padding: 8px 12px;
+
   border: 1px solid #e2e8f0;
+
   border-radius: 7px;
+
   background: #ffffff;
+
   color: #64748b;
+
   font-size: 12px;
+
   font-weight: 600;
+
   white-space: nowrap;
+
   cursor: pointer;
+
   transition: all 0.2s ease;
+
 }
+
+
 
 .mapa-cargos-tabs button:hover {
+
   border-color: #c92071;
+
   color: #991956;
+
   background: #fdf2f7;
+
 }
+
+
 
 .mapa-cargos-tabs button.ativo {
+
   border-color: #c92071;
+
   background: #c92071;
+
   color: #ffffff;
+
 }
+
+
 
 .mapa-cargos-tabs button:focus-visible {
+
   outline: 2px solid #991956;
+
   outline-offset: 2px;
+
 }
+
+
 
 /* Botão para expandir a lista de candidatos */
+
 .mapa-ver-todos {
+
   width: 100%;
+
   margin: 4px 0 12px;
+
   padding: 9px 12px;
+
   border: 1px solid #f0c4d8;
+
   border-radius: 7px;
+
   background: #fff7fa;
+
   color: #991956;
+
   font-size: 12px;
+
   font-weight: 700;
+
   cursor: pointer;
+
   transition: background 0.2s ease;
+
 }
+
+
 
 .mapa-ver-todos:hover {
+
   background: #fce7f0;
+
 }
+
+
 
 /* Navegação entre votação e seções */
+
 .mapa-painel-abas {
+
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
   gap: 6px;
+
   padding: 12px 16px;
+
   background: #ffffff;
+
   border-bottom: 1px solid #e2e8f0;
+
   flex-shrink: 0;
+
 }
+
+
 
 .mapa-painel-abas button {
+
   padding: 10px;
+
   border: 1px solid #e2e8f0;
+
   border-radius: 8px;
+
   background: #ffffff;
+
   color: #64748b;
+
   font-size: 13px;
+
   font-weight: 600;
+
   cursor: pointer;
+
   transition: 0.2s ease;
+
 }
+
+
 
 .mapa-painel-abas button:hover {
+
   border-color: #c92071;
+
   color: #991956;
+
 }
+
+
 
 .mapa-painel-abas button.ativo {
+
   background: #c92071;
+
   border-color: #c92071;
+
   color: #ffffff;
+
 }
+
+
 
 /* Área de conteúdo: uma única rolagem */
+
 .mapa-painel-conteudo {
+
   flex: 1;
+
   min-height: 0;
+
   overflow-y: auto;
+
   overscroll-behavior: contain;
+
   scrollbar-width: thin;
+
   scrollbar-color: #cbd5e1 transparent;
+
 }
+
+
 
 /* Aba de seções */
+
 .mapa-painel-secoes-conteudo {
+
   padding: 14px;
+
 }
+
+
 
 /* Pesquisa de zona ou seção */
+
 .mapa-painel-busca {
+
   margin-bottom: 12px;
+
 }
+
+
 
 .mapa-painel-busca input {
+
   width: 100%;
+
   height: 40px;
+
   padding: 0 12px;
+
   border: 1px solid #e2e8f0;
+
   border-radius: 8px;
+
   outline: none;
+
   background: #f8fafc;
+
   color: #1a202c;
+
   font-size: 13px;
+
   box-sizing: border-box;
+
 }
+
+
 
 .mapa-painel-busca input:focus {
+
   border-color: #c92071;
+
   box-shadow: 0 0 0 3px rgba(201, 32, 113, 0.1);
+
 }
+
+
 
 .mapa-painel-busca input::placeholder {
+
   color: #94a3b8;
+
 }
+
+
 
 /* Cabeçalho e linhas da lista de seções */
+
 .mapa-painel-secoes-conteudo .mapa-painel-colunas {
+
   position: sticky;
+
   top: 0;
+
   z-index: 2;
+
   border-bottom: 1px solid #e2e8f0;
+
 }
+
+
 
 .mapa-painel-secoes-conteudo .mapa-painel-linha {
+
   border-radius: 5px;
+
 }
+
+
 
 /* Botão para expandir ou recolher */
+
 .mapa-painel-ver-todas {
+
   width: 100%;
+
   margin-top: 12px;
+
   padding: 11px;
+
   border: 1px solid #f0c4d8;
+
   border-radius: 8px;
+
   background: #fff7fa;
+
   color: #991956;
+
   font-size: 12px;
+
   font-weight: 700;
+
   cursor: pointer;
+
   transition: 0.2s ease;
+
 }
+
+
 
 .mapa-painel-ver-todas:hover {
+
   background: #fce7f0;
+
   border-color: #c92071;
+
 }
+
+
 
 .mapa-painel-vazio {
+
   padding: 24px 12px;
+
   color: #718096;
+
   font-size: 13px;
+
   text-align: center;
+
 }
 
+
+
 /* ==========================================
+
    DASHBOARD ELEITORAL - TELA ÚNICA
-========================================== */
+
+\========================================== */
+
+
 
 @media (min-width: 1051px) {
 
+
+
   /* Página principal ocupa o espaço disponível */
+
   .mapa-eleitoral {
+
     height: 100%;
+
     min-height: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    overflow: hidden;
+
+  }
+
+
+
+  /* Cabeçalho compacto */
+
+  .mapa-header {
+
+    flex: 0 0 auto;
+
+    gap: 12px;
+
+    align-items: center;
+
+  }
+
+
+
+  .mapa-subtitulo {
+
+    font-size: 10px;
+
+    letter-spacing: 0.7px;
+
+  }
+
+
+
+  .mapa-header h1 {
+
+    margin: 3px 0;
+
+    font-size: 20px;
+
+  }
+
+
+
+  .mapa-header p {
+
+    font-size: 11px;
+
+  }
+
+
+
+  .mapa-periodo {
+
+    padding: 6px 14px;
+
+    border-radius: 8px;
+
+  }
+
+
+
+  .mapa-periodo strong {
+
+    font-size: 18px;
+
+  }
+
+
+
+  /* Filtros compactos */
+
+  .mapa-filtros {
+
+    flex: 0 0 auto;
+
+    grid-template-columns:
+
+      minmax(130px, 0.8fr) minmax(180px, 1.3fr) minmax(220px, 1.7fr);
+
+    gap: 10px;
+
+    padding: 10px 12px;
+
+  }
+
+
+
+  .mapa-filtro {
+
+    gap: 4px;
+
+  }
+
+
+
+  .mapa-filtro label {
+
+    font-size: 11px;
+
+  }
+
+
+
+  .mapa-filtro input,
+
+  .mapa-filtro select {
+
+    height: 34px;
+
+    font-size: 12px;
+
+  }
+
+
+
+  .mapa-paginacao {
+
+    padding-top: 7px;
+
+  }
+
+
+
+  .mapa-paginacao button {
+
+    padding: 6px 11px;
+
+    font-size: 11px;
+
+  }
+
+
+
+  /* Identificação do candidato */
+
+  .mapa-candidato-selecionado {
+
+    flex: 0 0 auto;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 7px 12px;
+
+  }
+
+
+
+  .mapa-candidato-selecionado strong {
+
+    font-size: 13px;
+
+  }
+
+
+
+  .mapa-candidato-selecionado span {
+
+    font-size: 11px;
+
+  }
+
+
+
+  /* Indicadores horizontais e compactos */
+
+  .mapa-indicadores {
+
+    flex: 0 0 auto;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 8px;
+
+  }
+
+
+
+  .mapa-card {
+
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 8px;
+
+    padding: 9px 14px;
+
+    border-radius: 8px;
+
+  }
+
+
+
+  .mapa-card span {
+
+    font-size: 11px;
+
+  }
+
+
+
+  .mapa-card strong {
+
+    font-size: 19px;
+
+  }
+
+
+
+  /* Controles e legenda compactos */
+
+  .mapa-controles {
+
+    flex: 0 0 auto;
+
+    gap: 7px;
+
+  }
+
+
+
+  .mapa-controles>span {
+
+    font-size: 11px;
+
+  }
+
+
+
+  .mapa-controles button {
+
+    padding: 6px 10px;
+
+    font-size: 11px;
+
+  }
+
+
+
+  .mapa-legenda {
+
+    flex: 0 0 auto;
+
+    gap: 7px;
+
+    font-size: 10px;
+
+    min-height: 16px;
+
+  }
+
+
+
+  .legenda-cor {
+
+    width: 20px;
+
+    height: 10px;
+
+  }
+
+
+
+  .legenda-circulo {
+
+    width: 10px;
+
+    height: 10px;
+
+  }
+
+
+
+  /* Mensagens não devem ocupar espaço excessivo */
+
+  .mapa-mensagem,
+
+  .mapa-erro {
+
+    flex: 0 0 auto;
+
+    padding: 7px 12px;
+
+    font-size: 12px;
+
+  }
+
+
+
+  /* Mapa e painel ocupam todo o espaço restante */
+
+  .mapa-layout {
+
+    flex: 1 1 0;
+
+    min-height: 0;
+
+    display: grid;
+
+    gap: 12px;
+
+  }
+
+
+
+  .mapa-layout.com-painel {
+
+    grid-template-columns: minmax(0, 1fr) minmax(460px, 500px);
+
+  }
+
+
+
+  .mapa-layout .mapa-container {
+
+    width: 100%;
+
+    height: 100%;
+
+    min-height: 0;
+
+  }
+
+
+
+  .mapa-layout .mapa-painel-secoes {
+
+    position: relative;
+
+    inset: auto;
+
+    width: 100%;
+
+    max-width: none;
+
+    height: 100%;
+
+    min-height: 0;
+
+  }
+
+
+
+  /* Painel lateral mais compacto */
+
+  .mapa-painel-header {
+
+    padding: 10px 13px;
+
+  }
+
+
+
+  .mapa-painel-header h2 {
+
+    font-size: 14px;
+
+  }
+
+
+
+  .mapa-painel-header p {
+
+    font-size: 11px;
+
+  }
+
+
+
+  .mapa-painel-detalhe {
+
+    padding: 8px 13px;
+
+  }
+
+
+
+  .mapa-painel-detalhe h3 {
+
+    font-size: 13px;
+
+    margin: 4px 0;
+
+  }
+
+
+
+  .mapa-painel-detalhe strong {
+
+    font-size: 18px;
+
+  }
+
+
+
+  .mapa-painel-detalhe p {
+
+    margin: 4px 0;
+
+    font-size: 11px;
+
+  }
+
+
+
+  .mapa-painel-abas {
+
+    padding: 6px 12px;
+
+  }
+
+
+
+  .mapa-painel-abas button {
+
+    padding: 7px;
+
+    font-size: 11px;
+
+  }
+
+
+
+  .mapa-painel-conteudo {
+
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+  }
+
+
+
+  .mapa-painel-resultados {
+
+    padding: 9px;
+
+  }
+
+
+
+  .mapa-cargo-resultado {
+
+    padding: 8px;
+
+    margin-bottom: 6px;
+
+  }
+
+
+
+  .mapa-rodape {
+
+    flex: 0 0 auto;
+
+    font-size: 10px;
+
+  }
+
+}
+
+
+
+/* Telas menores: preservar rolagem natural */
+
+@media (max-width: 1050px) {
+
+  .mapa-eleitoral {
+
+    height: auto;
+
+    overflow: visible;
+
+  }
+
+
+
+  .mapa-layout {
+
+    flex: none;
+
+  }
+
+}
+
+
+
+/* ==========================================
+
+   PREMIUM — REFINAMENTO DO PAINEL LATERAL
+
+\========================================== */
+
+
+
+@media (min-width: 1051px) {
+
+
+
+  /* Cabeçalho do painel */
+
+  .mapa-painel-header {
+
+    padding: 8px 12px;
+
+    gap: 10px;
+
+  }
+
+
+
+  .mapa-painel-header h2 {
+
+    margin: 3px 0;
+
+    font-size: 14px;
+
+    letter-spacing: -0.2px;
+
+  }
+
+
+
+  .mapa-painel-header p {
+
+    font-size: 10px;
+
+  }
+
+
+
+  /* Detalhes da seção selecionada */
+
+  .mapa-painel-detalhe {
+
+    padding: 7px 12px;
+
+  }
+
+
+
+  .mapa-painel-detalhe>span {
+
+    font-size: 9px;
+
+  }
+
+
+
+  .mapa-painel-detalhe h3 {
+
+    margin: 3px 0;
+
+    font-size: 13px;
+
+  }
+
+
+
+  .mapa-painel-detalhe strong {
+
+    font-size: 18px;
+
+  }
+
+
+
+  .mapa-painel-detalhe p {
+
+    margin: 4px 0 2px;
+
+    font-size: 11px;
+
+    line-height: 1.35;
+
+  }
+
+
+
+  .mapa-painel-detalhe small {
+
+    font-size: 10px;
+
+    line-height: 1.3;
+
+  }
+
+
+
+  /* Abas de navegação */
+
+  .mapa-painel-abas {
+
+    padding: 5px 10px;
+
+    gap: 5px;
+
+  }
+
+
+
+  .mapa-painel-abas button {
+
+    padding: 7px 9px;
+
+    font-size: 11px;
+
+  }
+
+
+
+  /* Melhor aproveitamento da área de resultados */
+
+  .mapa-painel-resultados {
+
+    padding: 10px;
+
+  }
+
+
+
+  .mapa-painel-resultados>h3 {
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+  }
+
+}
+
+
+
+/* ==========================================
+
+   PAINEL PREMIUM — RESUMOS INFORMATIVOS
+
+\========================================== */
+
+
+
+/* Cabeçalho com resumo do município */
+
+.mapa-painel-header {
+
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) minmax(125px, auto) 28px;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 9px 12px;
+
+  background: var(--color-surface);
+
+  border-bottom: 1px solid var(--color-border);
+
+}
+
+
+
+.mapa-painel-header-info {
+
+  min-width: 0;
+
+}
+
+
+
+.mapa-painel-header-info h2 {
+
+  margin: 3px 0;
+
+  color: var(--color-text-primary);
+
+  font-size: 14px;
+
+}
+
+
+
+.mapa-painel-header-info p {
+
+  margin: 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: 10px;
+
+}
+
+
+
+.mapa-painel-header-resumo {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+
+  padding: 7px 10px;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: 8px;
+
+  background: var(--color-surface-secondary);
+
+}
+
+
+
+.mapa-painel-header-resumo span,
+
+.mapa-painel-detalhe-resumo span {
+
+  color: var(--color-text-secondary);
+
+  font-size: 10px;
+
+  line-height: 1.3;
+
+}
+
+
+
+.mapa-painel-header-resumo strong {
+
+  color: var(--color-text-primary);
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  font-variant-numeric: tabular-nums;
+
+}
+
+
+
+/* Botão de fechar */
+
+.mapa-painel-header button {
+
+  align-self: start;
+
+  width: 28px;
+
+  height: 28px;
+
+  background: var(--color-surface-secondary);
+
+  color: var(--color-text-secondary);
+
+  font-size: 19px;
+
+  border: none;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+}
+
+
+
+/* Detalhes da seção em duas colunas */
+
+.mapa-painel-detalhe {
+
+  display: grid;
+
+  grid-template-columns: minmax(0, 1.5fr) minmax(120px, 0.8fr);
+
+  align-items: stretch;
+
+  gap: 12px;
+
+  padding: 9px 12px;
+
+  background: #FAF7F9;
+
+  border-bottom: 1px solid var(--color-border);
+
+}
+
+
+
+.mapa-painel-detalhe-principal {
+
+  min-width: 0;
+
+}
+
+
+
+.mapa-painel-detalhe-principal h3 {
+
+  margin: 3px 0;
+
+  color: var(--color-text-primary);
+
+  font-size: 13px;
+
+}
+
+
+
+.mapa-painel-detalhe-principal strong {
+
+  color: var(--color-primary-dark);
+
+  font-size: 19px;
+
+  font-variant-numeric: tabular-nums;
+
+}
+
+
+
+.mapa-painel-detalhe-principal p {
+
+  margin: 4px 0 2px;
+
+  color: var(--color-text-primary);
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  overflow-wrap: anywhere;
+
+}
+
+
+
+.mapa-painel-detalhe-principal small {
+
+  color: var(--color-text-secondary);
+
+  font-size: 10px;
+
+  overflow-wrap: anywhere;
+
+}
+
+
+
+/* Resumo do local de votação */
+
+.mapa-painel-detalhe-resumo {
+
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  align-content: center;
+
+  gap: 7px;
+
+  min-width: 0;
+
+}
+
+
+
+.mapa-painel-detalhe-resumo>div {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+
+  padding: 7px 9px;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: 7px;
+
+  background: rgba(255, 255, 255, 0.8);
+
+}
+
+
+
+.mapa-painel-detalhe-resumo strong {
+
+  color: var(--color-text-primary);
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+}
+
+
+
+/* Adaptação para painéis mais estreitos */
+
+@media (max-width: 600px) {
+
+  .mapa-painel-header {
+
+    grid-template-columns: minmax(0, 1fr) 28px;
+
+  }
+
+
+
+  .mapa-painel-header-resumo {
+
+    grid-column: 1 / -1;
+
+    grid-row: 2;
+
+  }
+
+
+
+  .mapa-painel-header button {
+
+    grid-column: 2;
+
+    grid-row: 1;
+
+  }
+
+
+
+  .mapa-painel-detalhe {
+
+    grid-template-columns: minmax(0, 1fr) minmax(105px, 0.75fr);
+
+    gap: 8px;
+
+  }
+
+}
+
+
+
+.mapa-painel-detalhe-principal>span {
+
+  display: block;
+
+  color: var(--color-primary-dark);
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.6px;
+
+}
+
+/* ==========================================================
+   MAPA ELEITORAL — PAINEL LATERAL INTEGRAL
+   Escopo exclusivo da página MapaEleitoral
+   Mantém mapa, filtros e painel em colunas independentes.
+========================================================== */
+
+@media (min-width: 1051px) {
+  .mapa-eleitoral {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .mapa-eleitoral.com-acompanhamento {
+    grid-template-columns: minmax(0, 1fr) minmax(400px, min(35%, 520px));
+    column-gap: 12px;
+  }
+
+  /* Coluna esquerda: cabeçalho, filtros, indicadores e mapa */
+  .mapa-eleitoral > .mapa-conteudo {
+    grid-column: 1;
+    grid-row: 1;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .mapa-conteudo > .mapa-header,
+  .mapa-conteudo > .mapa-filtros,
+  .mapa-conteudo > .mapa-mensagem,
+  .mapa-conteudo > .mapa-erro,
+  .mapa-conteudo > .mapa-candidato-selecionado,
+  .mapa-conteudo > .mapa-indicadores,
+  .mapa-conteudo > .mapa-controles,
+  .mapa-conteudo > .mapa-legenda,
+  .mapa-conteudo > .mapa-rodape {
+    flex: 0 0 auto;
+  }
+
+  /* O mapa usa somente a altura que sobra abaixo dos filtros */
+  .mapa-conteudo > .mapa-layout {
+    display: block;
+    flex: 1 1 0;
+    width: 100%;
+    min-width: 0;
+    min-height: 180px;
+    height: auto;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .mapa-conteudo > .mapa-layout > .mapa-container {
+    position: relative;
+    width: 100%;
+    height: 100% !important;
+    min-width: 0;
+    min-height: 0;
     overflow: hidden;
   }
 
-  /* Cabeçalho compacto */
-  .mapa-header {
-    flex: 0 0 auto;
-    gap: 12px;
-    align-items: center;
-  }
-
-  .mapa-subtitulo {
-    font-size: 10px;
-    letter-spacing: 0.7px;
-  }
-
-  .mapa-header h1 {
-    margin: 3px 0;
-    font-size: 20px;
-  }
-
-  .mapa-header p {
-    font-size: 11px;
-  }
-
-  .mapa-periodo {
-    padding: 6px 14px;
-    border-radius: 8px;
-  }
-
-  .mapa-periodo strong {
-    font-size: 18px;
-  }
-
-  /* Filtros compactos */
-  .mapa-filtros {
-    flex: 0 0 auto;
-    grid-template-columns:
-      minmax(130px, 0.8fr) minmax(180px, 1.3fr) minmax(220px, 1.7fr);
-    gap: 10px;
-    padding: 10px 12px;
-  }
-
-  .mapa-filtro {
-    gap: 4px;
-  }
-
-  .mapa-filtro label {
-    font-size: 11px;
-  }
-
-  .mapa-filtro input,
-  .mapa-filtro select {
-    height: 34px;
-    font-size: 12px;
-  }
-
-  .mapa-paginacao {
-    padding-top: 7px;
-  }
-
-  .mapa-paginacao button {
-    padding: 6px 11px;
-    font-size: 11px;
-  }
-
-  /* Identificação do candidato */
-  .mapa-candidato-selecionado {
-    flex: 0 0 auto;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 7px 12px;
-  }
-
-  .mapa-candidato-selecionado strong {
-    font-size: 13px;
-  }
-
-  .mapa-candidato-selecionado span {
-    font-size: 11px;
-  }
-
-  /* Indicadores horizontais e compactos */
-  .mapa-indicadores {
-    flex: 0 0 auto;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-  }
-
-  .mapa-card {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 9px 14px;
-    border-radius: 8px;
-  }
-
-  .mapa-card span {
-    font-size: 11px;
-  }
-
-  .mapa-card strong {
-    font-size: 19px;
-  }
-
-  /* Controles e legenda compactos */
-  .mapa-controles {
-    flex: 0 0 auto;
-    gap: 7px;
-  }
-
-  .mapa-controles>span {
-    font-size: 11px;
-  }
-
-  .mapa-controles button {
-    padding: 6px 10px;
-    font-size: 11px;
-  }
-
-  .mapa-legenda {
-    flex: 0 0 auto;
-    gap: 7px;
-    font-size: 10px;
-    min-height: 16px;
-  }
-
-  .legenda-cor {
-    width: 20px;
-    height: 10px;
-  }
-
-  .legenda-circulo {
-    width: 10px;
-    height: 10px;
-  }
-
-  /* Mensagens não devem ocupar espaço excessivo */
-  .mapa-mensagem,
-  .mapa-erro {
-    flex: 0 0 auto;
-    padding: 7px 12px;
-    font-size: 12px;
-  }
-
-  /* Mapa e painel ocupam todo o espaço restante */
-  .mapa-layout {
-    flex: 1 1 0;
-    min-height: 0;
-    display: grid;
-    gap: 12px;
-  }
-
-  .mapa-layout.com-painel {
-    grid-template-columns: minmax(0, 1fr) minmax(460px, 500px);
-  }
-
-  .mapa-layout .mapa-container {
+  .mapa-conteudo .mapa-leaflet {
     width: 100%;
-    height: 100%;
-    min-height: 0;
+    height: 100% !important;
   }
 
-  .mapa-layout .mapa-painel-secoes {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    max-width: none;
-    height: 100%;
-    min-height: 0;
+  /* Coluna direita: painel desde o topo até a base da página */
+  .mapa-eleitoral.com-acompanhamento > .mapa-painel-secoes {
+    grid-column: 2;
+    grid-row: 1;
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0;
+    height: 100% !important;
+    min-height: 0 !important;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08) !important;
   }
 
-  /* Painel lateral mais compacto */
-  .mapa-painel-header {
-    padding: 10px 13px;
+  /* O cabeçalho permanece fixo e o conteúdo rola independentemente */
+  .mapa-eleitoral.com-acompanhamento > .mapa-painel-secoes > header {
+    flex: 0 0 auto !important;
   }
 
-  .mapa-painel-header h2 {
-    font-size: 14px;
-  }
-
-  .mapa-painel-header p {
-    font-size: 11px;
-  }
-
-  .mapa-painel-detalhe {
-    padding: 8px 13px;
-  }
-
-  .mapa-painel-detalhe h3 {
-    font-size: 13px;
-    margin: 4px 0;
-  }
-
-  .mapa-painel-detalhe strong {
-    font-size: 18px;
-  }
-
-  .mapa-painel-detalhe p {
-    margin: 4px 0;
-    font-size: 11px;
-  }
-
-  .mapa-painel-abas {
-    padding: 6px 12px;
-  }
-
-  .mapa-painel-abas button {
-    padding: 7px;
-    font-size: 11px;
-  }
-
-  .mapa-painel-conteudo {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-  }
-
-  .mapa-painel-resultados {
-    padding: 9px;
-  }
-
-  .mapa-cargo-resultado {
-    padding: 8px;
-    margin-bottom: 6px;
-  }
-
-  .mapa-rodape {
-    flex: 0 0 auto;
-    font-size: 10px;
+  .mapa-eleitoral.com-acompanhamento > .mapa-painel-secoes > div {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+    box-sizing: border-box;
   }
 }
 
-/* Telas menores: preservar rolagem natural */
+/* Tablet e celular: conteúdo empilhado, sem coluna lateral estreita */
 @media (max-width: 1050px) {
   .mapa-eleitoral {
+    display: flex !important;
+    flex-direction: column;
+    width: 100%;
     height: auto;
+    min-height: 0;
     overflow: visible;
   }
 
-  .mapa-layout {
+  .mapa-eleitoral > .mapa-conteudo {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    min-width: 0;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .mapa-conteudo > .mapa-layout {
+    display: block;
     flex: none;
+    width: 100%;
+  }
+
+  .mapa-conteudo > .mapa-layout > .mapa-container {
+    width: 100%;
+    height: 480px;
+  }
+
+  .mapa-eleitoral.com-acompanhamento > .mapa-painel-secoes {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0;
+    height: 680px !important;
+    margin-top: 12px;
   }
 }
 
-/* ==========================================
-   PREMIUM — REFINAMENTO DO PAINEL LATERAL
-========================================== */
-
-@media (min-width: 1051px) {
-
-  /* Cabeçalho do painel */
-  .mapa-painel-header {
-    padding: 8px 12px;
-    gap: 10px;
-  }
-
-  .mapa-painel-header h2 {
-    margin: 3px 0;
-    font-size: 14px;
-    letter-spacing: -0.2px;
-  }
-
-  .mapa-painel-header p {
-    font-size: 10px;
-  }
-
-  /* Detalhes da seção selecionada */
-  .mapa-painel-detalhe {
-    padding: 7px 12px;
-  }
-
-  .mapa-painel-detalhe>span {
-    font-size: 9px;
-  }
-
-  .mapa-painel-detalhe h3 {
-    margin: 3px 0;
-    font-size: 13px;
-  }
-
-  .mapa-painel-detalhe strong {
-    font-size: 18px;
-  }
-
-  .mapa-painel-detalhe p {
-    margin: 4px 0 2px;
-    font-size: 11px;
-    line-height: 1.35;
-  }
-
-  .mapa-painel-detalhe small {
-    font-size: 10px;
-    line-height: 1.3;
-  }
-
-  /* Abas de navegação */
-  .mapa-painel-abas {
-    padding: 5px 10px;
-    gap: 5px;
-  }
-
-  .mapa-painel-abas button {
-    padding: 7px 9px;
-    font-size: 11px;
-  }
-
-  /* Melhor aproveitamento da área de resultados */
-  .mapa-painel-resultados {
-    padding: 10px;
-  }
-
-  .mapa-painel-resultados>h3 {
-    margin-bottom: 8px;
-    font-size: 14px;
-  }
-}
-
-/* ==========================================
-   PAINEL PREMIUM — RESUMOS INFORMATIVOS
-========================================== */
-
-/* Cabeçalho com resumo do município */
-.mapa-painel-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(125px, auto) 28px;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 12px;
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.mapa-painel-header-info {
-  min-width: 0;
-}
-
-.mapa-painel-header-info h2 {
-  margin: 3px 0;
-  color: var(--color-text-primary);
-  font-size: 14px;
-}
-
-.mapa-painel-header-info p {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: 10px;
-}
-
-.mapa-painel-header-resumo {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-  padding: 7px 10px;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background: var(--color-surface-secondary);
-}
-
-.mapa-painel-header-resumo span,
-.mapa-painel-detalhe-resumo span {
-  color: var(--color-text-secondary);
-  font-size: 10px;
-  line-height: 1.3;
-}
-
-.mapa-painel-header-resumo strong {
-  color: var(--color-text-primary);
-  font-size: 16px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-/* Botão de fechar */
-.mapa-painel-header button {
-  align-self: start;
-  width: 28px;
-  height: 28px;
-  background: var(--color-surface-secondary);
-  color: var(--color-text-secondary);
-  font-size: 19px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* Detalhes da seção em duas colunas */
-.mapa-painel-detalhe {
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(120px, 0.8fr);
-  align-items: stretch;
-  gap: 12px;
-  padding: 9px 12px;
-  background: #FAF7F9;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.mapa-painel-detalhe-principal {
-  min-width: 0;
-}
-
-.mapa-painel-detalhe-principal h3 {
-  margin: 3px 0;
-  color: var(--color-text-primary);
-  font-size: 13px;
-}
-
-.mapa-painel-detalhe-principal strong {
-  color: var(--color-primary-dark);
-  font-size: 19px;
-  font-variant-numeric: tabular-nums;
-}
-
-.mapa-painel-detalhe-principal p {
-  margin: 4px 0 2px;
-  color: var(--color-text-primary);
-  font-size: 11px;
-  font-weight: 600;
-  overflow-wrap: anywhere;
-}
-
-.mapa-painel-detalhe-principal small {
-  color: var(--color-text-secondary);
-  font-size: 10px;
-  overflow-wrap: anywhere;
-}
-
-/* Resumo do local de votação */
-.mapa-painel-detalhe-resumo {
-  display: grid;
-  grid-template-columns: 1fr;
-  align-content: center;
-  gap: 7px;
-  min-width: 0;
-}
-
-.mapa-painel-detalhe-resumo>div {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 7px 9px;
-  border: 1px solid var(--color-border);
-  border-radius: 7px;
-  background: rgba(255, 255, 255, 0.8);
-}
-
-.mapa-painel-detalhe-resumo strong {
-  color: var(--color-text-primary);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-/* Adaptação para painéis mais estreitos */
 @media (max-width: 600px) {
-  .mapa-painel-header {
-    grid-template-columns: minmax(0, 1fr) 28px;
+  .mapa-conteudo > .mapa-layout > .mapa-container {
+    height: 400px;
   }
 
-  .mapa-painel-header-resumo {
-    grid-column: 1 / -1;
-    grid-row: 2;
+  .mapa-eleitoral.com-acompanhamento > .mapa-painel-secoes {
+    height: 700px !important;
   }
-
-  .mapa-painel-header button {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .mapa-painel-detalhe {
-    grid-template-columns: minmax(0, 1fr) minmax(105px, 0.75fr);
-    gap: 8px;
-  }
-}
-
-.mapa-painel-detalhe-principal>span {
-  display: block;
-  color: var(--color-primary-dark);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.6px;
 }

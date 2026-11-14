@@ -51,6 +51,15 @@ export default function PainelSecoes({
   );
   const secoesExibidas = mostrarTodas ? secoesFiltradas : secoesFiltradas.slice(0, 5);
 
+  const codigoCargoAtual = abaCargo ?? cargoSelecionadoId;
+
+  const totalVotosSecao =
+    codigoCargoAtual === null
+      ? 0
+      : votosSecao
+        .filter((voto) => voto.officeCode === codigoCargoAtual)
+        .reduce((total, voto) => total + voto.quantity, 0);
+
   // Quando a seção muda, reseta para a aba "votacao"
   useEffect(() => {
     if (secaoSelecionada) {
@@ -96,7 +105,13 @@ export default function PainelSecoes({
             <div className="mapa-painel-detalhe-principal">
               <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#C92071", textTransform: "uppercase" }}>SEÇÃO SELECIONADA</span>
               <h3 style={{ margin: "0.25rem 0", fontSize: "1rem" }}>Zona {secaoSelecionada.zone} · Seção {secaoSelecionada.section}</h3>
-              <strong style={{ fontSize: "1.2rem", color: "#C92071" }}>{secaoSelecionada.votes.toLocaleString("pt-BR")} votos</strong>
+              <strong style={{ fontSize: "1.2rem", color: "#C92071" }}>
+                {carregandoVotos
+                  ? "Carregando..."
+                  : erroVotos
+                    ? "—"
+                    : `${totalVotosSecao.toLocaleString("pt-BR")} votos`}
+              </strong>
               <p style={{ margin: "0.5rem 0 0 0", fontSize: "0.85rem", color: "#333" }}>{secaoSelecionada.pollingPlaceName ?? "Local não identificado"}</p>
               <small style={{ fontSize: "0.75rem", color: "#666" }}>{secaoSelecionada.pollingPlaceAddress ?? "Endereço não informado"}</small>
             </div>
